@@ -1,6 +1,9 @@
 package controller;
 
 import bean.Annonce;
+import bean.helper.AnnonceTypeAnnonce;
+import bean.helper.CategoryAnnonce;
+import bean.helper.CityAnnonce;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
 import service.AnnonceFacade;
@@ -18,6 +21,9 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import service.AnnonceTypeFacade;
+import service.CategoryFacade;
+import service.CityFacade;
 
 @Named("annonceController")
 @SessionScoped
@@ -25,11 +31,20 @@ public class AnnonceController implements Serializable {
 
     private Annonce current;
     private DataModel items = null;
-    
-    private List<Annonce>  annonces =null;
-            
+
+    private List<Annonce> annonces = null;
+    private List<CategoryAnnonce> categoryAnnonces = null;
+    private List<AnnonceTypeAnnonce> annonceTypeAnnonces = null;
+    private List<CityAnnonce> cityAnnonces = null;
     @EJB
     private service.AnnonceFacade ejbFacade;
+
+    @EJB
+    private CategoryFacade categoryFacade;
+    @EJB
+    private AnnonceTypeFacade annonceTypeFacade;
+    @EJB
+    private CityFacade cityFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -237,12 +252,45 @@ public class AnnonceController implements Serializable {
     }
 
     public List<Annonce> getAnnonces() {
-         if (annonces == null) {
+        if (annonces == null) {
             annonces = getFacade().findAll();
         }
         return annonces;
     }
 
+    public CategoryFacade getCategoryFacade() {
+        return categoryFacade;
+    }
+
+    public List<CategoryAnnonce> getCategoryAnnonces() {
+
+        if (categoryAnnonces == null) {
+            categoryAnnonces = getCategoryFacade().coutAnnonceActiveByCategory();
+        }
+        return categoryAnnonces;
+    }
+
+    public AnnonceTypeFacade getAnnonceTypeFacade() {
+        return annonceTypeFacade;
+    }
+
+    public List<AnnonceTypeAnnonce> getAnnonceTypeAnnonces() {
+        if (annonceTypeAnnonces == null) {
+            annonceTypeAnnonces = getAnnonceTypeFacade().countAnnonceActiveByType();
+        }
+        return annonceTypeAnnonces;
+    }
+
+    public List<CityAnnonce> getCityAnnonces() {
+         if (cityAnnonces == null) {
+            cityAnnonces = getCityFacade().countAnnonceActiveByCity();
+        }
+        return cityAnnonces;
+    }
+
+    public CityFacade getCityFacade() {
+        return cityFacade;
+    }
     
     
 

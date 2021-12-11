@@ -2,7 +2,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-          
+
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/template.xhtml">
 
@@ -45,7 +45,7 @@
 
                     <div class="container">
 
-                        <h1 class="text-left mb-5">Find Your Favorite Property</h1>
+                        <h1 class="text-left mb-5">Trouvez votre propriété préférée</h1>
                         <form>
 
                             <div class="row no-gutters">
@@ -298,68 +298,29 @@
 
                                 <div class="card-body">
 
-                                    <h5 class="card-title mb-3">Property Type</h5>
+                                    <h5 class="card-title mb-3">Type de propriété</h5>
 
                                     <ul class="sidebar-card-list">
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> House/Villa <span class="sidebar-badge">90</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Flat <span class="sidebar-badge">60</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Plot/Land <span class="sidebar-badge">44</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Office Space <span class="sidebar-badge">38</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Shop/Showroom <span class="sidebar-badge">29</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Commercial Land <span class="sidebar-badge">28</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Warehouse/ Godown <span class="sidebar-badge">12</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Industrial Building <span class="sidebar-badge">8</span></a></li>
+                                        <c:forEach items="#{annonceController.categoryAnnonces}" var="categoryAnnonce" varStatus="metadata"> 
+                                            <li><a href="#"><i class="mdi mdi-chevron-right" /> #{categoryAnnonce.name} <span class="sidebar-badge">#{categoryAnnonce.nomber}</span></a></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
 
-                            <div class="card">
 
-                                <div class="card-body property-features-add">
-
-                                    <h5 class="card-title mb-3">Property Features</h5>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="osahan-checkbox" checked="checked" />
-                                        <label class="custom-control-label" for="osahan-checkbox">Center Cooling</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="osahan-checkbox1" />
-                                        <label class="custom-control-label" for="osahan-checkbox1">Fire Alarm</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="osahan-checkbox2" checked="checked" />
-                                        <label class="custom-control-label" for="osahan-checkbox2">Heating</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="osahan-checkbox3" />
-                                        <label class="custom-control-label" for="osahan-checkbox3">Gym</label>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="card">
 
                                 <div class="card-body">
 
-                                    <h5 class="card-title mb-3">Property Status</h5>
+                                    <h5 class="card-title mb-3">Statut de la propriété</h5>
 
                                     <ul class="sidebar-card-list">
+                                        <c:forEach items="#{annonceController.annonceTypeAnnonces}" var="annonceTypeAnnonce" varStatus="metadata"> 
+                                            <li><a href="#"><i class="mdi mdi-chevron-right" /> #{annonceTypeAnnonce.type} <span class="sidebar-badge"> #{annonceTypeAnnonce.nomber} </span></a></li>
+                                        </c:forEach>
 
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> For Rent <span class="sidebar-badge">600</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> For Sale <span class="sidebar-badge">1200</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -368,83 +329,17 @@
 
                                 <div class="card-body">
 
-                                    <h5 class="card-title mb-3">Property By City</h5>
+                                    <h5 class="card-title mb-3">Propriété par ville</h5>
 
                                     <ul class="sidebar-card-list">
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> New York <span class="sidebar-badge">220</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Los Angeles <span class="sidebar-badge">150</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Chicago <span class="sidebar-badge">100</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Houston <span class="sidebar-badge">50</span></a></li>
-
-                                        <li><a href="#"><i class="mdi mdi-chevron-right" /> Philadelphia <span class="sidebar-badge">23</span></a></li>
+                                        <c:forEach items="#{annonceController.cityAnnonces}" var="cityAnnonce" varStatus="metadata"> 
+                                            <li><a href="#"><i class="mdi mdi-chevron-right" />#{cityAnnonce.name} <span class="sidebar-badge">#{cityAnnonce.nomber}</span></a></li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
 
-                            <div class="card">
 
-                                <div class="card-body">
-
-                                    <h5 class="card-title mb-4">Featured Properties</h5>
-
-                                    <div id="featured-properties" class="carousel slide" data-ride="carousel">
-
-                                        <ol class="carousel-indicators">
-
-                                            <li data-target="#featured-properties" data-slide-to="0" class="active" />
-
-                                            <li data-target="#featured-properties" data-slide-to="1" />
-                                        </ol>
-
-                                        <div class="carousel-inner">
-
-                                            <div class="carousel-item active">
-
-                                                <div class="card card-list">
-                                                    <a href="#">
-                                                        <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
-
-                                                        <div class="card-body">
-
-                                                            <h5 class="card-title">House in Kent Street</h5>
-
-                                                            <h6 class="card-subtitle mb-2 text-muted"><i class="mdi mdi-home-map-marker" /> 127 Kent Sreet, Sydny</h6>
-
-                                                            <h2 class="text-primary mb-0 mt-3">
-                                                                $130,000 <small>/month</small>
-                                                            </h2>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            <div class="carousel-item">
-
-                                                <div class="card card-list">
-                                                    <a href="#">
-                                                        <img class="card-img-top" src="./ressources/img/list/2.png" alt="Card image cap" />
-
-                                                        <div class="card-body">
-
-                                                            <h5 class="card-title">Family House in Hudson</h5>
-
-                                                            <h6 class="card-subtitle mb-2 text-muted"><i class="mdi mdi-home-map-marker" /> Hoboken, NJ, USA</h6>
-
-                                                            <h2 class="text-primary mb-0 mt-3">
-                                                                $127,000 <small>/month</small>
-                                                            </h2>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="col-lg-9 col-md-9">
@@ -483,9 +378,9 @@
                                     <div class="col-lg-4 col-md-4">
 
                                         <div class="card card-list">
-                                           
+
                                             <a href="faces/detail_annonce.xhtml" >
-                                                
+
                                                 <div class="card-img">
 
                                                     <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
@@ -503,12 +398,12 @@
 
                                                     <h5 class="card-title mb-2">#{annonce.title}</h5>
 
-                                                    <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.area}</h6>
+                                                    <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
                                                 </div>
 
 
                                             </a>
-                                            
+
                                         </div>
                                     </div>
 

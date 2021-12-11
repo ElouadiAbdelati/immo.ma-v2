@@ -19,12 +19,14 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
 
     @PersistenceContext(unitName = "immo.maPU")
     private EntityManager em;
-
+   
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+   
+    
     public AnnonceFacade() {
         super(Annonce.class);
     }
