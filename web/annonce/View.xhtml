@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewAnnonceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_id}"/>
+                    <h:outputText value="#{annonceController.selected.id}" title="#{bundle.ViewAnnonceTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_title}"/>
+                    <h:outputText value="#{annonceController.selected.title}" title="#{bundle.ViewAnnonceTitle_title}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_reference}"/>
+                    <h:outputText value="#{annonceController.selected.reference}" title="#{bundle.ViewAnnonceTitle_reference}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_description}"/>
+                    <h:outputText value="#{annonceController.selected.description}" title="#{bundle.ViewAnnonceTitle_description}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_address}"/>
+                    <h:outputText value="#{annonceController.selected.address}" title="#{bundle.ViewAnnonceTitle_address}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_pieces}"/>
+                    <h:outputText value="#{annonceController.selected.pieces}" title="#{bundle.ViewAnnonceTitle_pieces}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_surface}"/>
+                    <h:outputText value="#{annonceController.selected.surface}" title="#{bundle.ViewAnnonceTitle_surface}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_devise}"/>
+                    <h:outputText value="#{annonceController.selected.devise}" title="#{bundle.ViewAnnonceTitle_devise}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_prix}"/>
+                    <h:outputText value="#{annonceController.selected.prix}" title="#{bundle.ViewAnnonceTitle_prix}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_chamber}"/>
+                    <h:outputText value="#{annonceController.selected.chamber}" title="#{bundle.ViewAnnonceTitle_chamber}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_latitude}"/>
+                    <h:outputText value="#{annonceController.selected.latitude}" title="#{bundle.ViewAnnonceTitle_latitude}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_longitude}"/>
+                    <h:outputText value="#{annonceController.selected.longitude}" title="#{bundle.ViewAnnonceTitle_longitude}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_department}"/>
+                    <h:outputText value="#{annonceController.selected.department}" title="#{bundle.ViewAnnonceTitle_department}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_toilet}"/>
+                    <h:outputText value="#{annonceController.selected.toilet}" title="#{bundle.ViewAnnonceTitle_toilet}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_status}"/>
+                    <h:outputText value="#{annonceController.selected.status}" title="#{bundle.ViewAnnonceTitle_status}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_annonceur}"/>
+                    <h:outputText value="#{annonceController.selected.annonceur}" title="#{bundle.ViewAnnonceTitle_annonceur}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_category}"/>
+                    <h:outputText value="#{annonceController.selected.category}" title="#{bundle.ViewAnnonceTitle_category}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_annonceType}"/>
+                    <h:outputText value="#{annonceController.selected.annonceType}" title="#{bundle.ViewAnnonceTitle_annonceType}"/>
+                    <h:outputText value="#{bundle.ViewAnnonceLabel_secteur}"/>
+                    <h:outputText value="#{annonceController.selected.secteur}" title="#{bundle.ViewAnnonceTitle_secteur}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{annonceController.destroyAndView}" value="#{bundle.ViewAnnonceDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewAnnonceEditLink}"/>
+                <br />
+                <h:commandLink action="#{annonceController.prepareCreate}" value="#{bundle.ViewAnnonceCreateLink}" />
+                <br />
+                <h:commandLink action="#{annonceController.prepareList}" value="#{bundle.ViewAnnonceShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewAnnonceIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

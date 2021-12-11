@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCategoryTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditCategoryLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{categoryController.selected.id}" title="#{bundle.EditCategoryTitle_id}" />
+                    <h:outputLabel value="#{bundle.EditCategoryLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{categoryController.selected.name}" title="#{bundle.EditCategoryTitle_name}" />
+                </h:panelGrid>
+                <h:commandLink action="#{categoryController.update}" value="#{bundle.EditCategorySaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditCategoryViewLink}"/>
+                <br />
+                <h:commandLink action="#{categoryController.prepareList}" value="#{bundle.EditCategoryShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditCategoryIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
