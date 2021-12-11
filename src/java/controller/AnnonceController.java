@@ -1,6 +1,8 @@
 package controller;
 
 import bean.Annonce;
+import bean.AnnonceType;
+import bean.City;
 import bean.helper.AnnonceTypeAnnonce;
 import bean.helper.CategoryAnnonce;
 import bean.helper.CityAnnonce;
@@ -36,6 +38,16 @@ public class AnnonceController implements Serializable {
     private List<CategoryAnnonce> categoryAnnonces = null;
     private List<AnnonceTypeAnnonce> annonceTypeAnnonces = null;
     private List<CityAnnonce> cityAnnonces = null;
+
+    private List<City> citys = null;
+    private List<AnnonceType> annonceTypes = null;
+    private City citySearch;
+    private AnnonceType annonceTypeSearch;
+    private int nbrchambresSearch;
+    private int tailleMinimaleSearch;
+    private int tailleMaxSearch;
+    private int nbrThermesSearch;
+
     @EJB
     private service.AnnonceFacade ejbFacade;
 
@@ -45,6 +57,7 @@ public class AnnonceController implements Serializable {
     private AnnonceTypeFacade annonceTypeFacade;
     @EJB
     private CityFacade cityFacade;
+
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -282,7 +295,7 @@ public class AnnonceController implements Serializable {
     }
 
     public List<CityAnnonce> getCityAnnonces() {
-         if (cityAnnonces == null) {
+        if (cityAnnonces == null) {
             cityAnnonces = getCityFacade().countAnnonceActiveByCity();
         }
         return cityAnnonces;
@@ -291,7 +304,77 @@ public class AnnonceController implements Serializable {
     public CityFacade getCityFacade() {
         return cityFacade;
     }
-    
-    
+
+    public List<City> getCitys() {
+        if (citys == null) {
+            citys = getCityFacade().findAll();
+
+        }
+        return citys;
+    }
+
+    public List<AnnonceType> getAnnonceTypes() {
+        if (annonceTypes == null) {
+            annonceTypes = getAnnonceTypeFacade().findAll();
+        }
+        return annonceTypes;
+    }
+
+    public City getCitySearch() {
+        return citySearch;
+    }
+
+    public void setCitySearch(City citySearch) {
+        this.citySearch = citySearch;
+    }
+
+    public AnnonceType getAnnonceTypeSearch() {
+        return annonceTypeSearch;
+    }
+
+    public void setAnnonceTypeSearch(AnnonceType annonceTypeSearch) {
+        this.annonceTypeSearch = annonceTypeSearch;
+    }
+
+    public int getNbrchambresSearch() {
+        return nbrchambresSearch;
+    }
+
+    public void setNbrchambresSearch(int nbrchambresSearch) {
+        this.nbrchambresSearch = nbrchambresSearch;
+    }
+
+    public int getTailleMinimaleSearch() {
+        return tailleMinimaleSearch;
+    }
+
+    public void setTailleMinimaleSearch(int tailleMinimaleSearch) {
+        this.tailleMinimaleSearch = tailleMinimaleSearch;
+    }
+
+    public int getTailleMaxSearch() {
+        return tailleMaxSearch;
+    }
+
+    public void setTailleMaxSearch(int tailleMaxSearch) {
+        this.tailleMaxSearch = tailleMaxSearch;
+    }
+
+    public int getNbrThermesSearch() {
+        return nbrThermesSearch;
+    }
+
+    public void setNbrThermesSearch(int nbrThermesSearch) {
+        this.nbrThermesSearch = nbrThermesSearch;
+    }
+
+    public void search() {
+        if(citySearch!=null) System.out.println("search() citySearch " + citySearch.getName());
+        if(annonceTypeSearch!=null)  System.out.println("search() annonceTypeSearch " + annonceTypeSearch.getType());
+        System.out.println("search() nbrchambresSearch " + nbrchambresSearch);
+        System.out.println("search() tailleMinimaleSearch " + tailleMinimaleSearch);
+        System.out.println("search() tailleMaxSearch " + tailleMaxSearch);
+        System.out.println("search() nbrThermesSearch " + nbrThermesSearch);
+    }
 
 }

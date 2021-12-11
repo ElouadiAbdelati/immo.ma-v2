@@ -75,7 +75,7 @@ public class AnnonceType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.irisi.immoMa.bean.AnnonceTypeEntity[ id=" + id + " ]";
+        return type;
     }
     
 }
