@@ -6,6 +6,7 @@ import controller.util.PaginationHelper;
 import service.AnnonceFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -24,6 +25,9 @@ public class AnnonceController implements Serializable {
 
     private Annonce current;
     private DataModel items = null;
+    
+    private List<Annonce>  annonces =null;
+            
     @EJB
     private service.AnnonceFacade ejbFacade;
     private PaginationHelper pagination;
@@ -231,5 +235,15 @@ public class AnnonceController implements Serializable {
         }
 
     }
+
+    public List<Annonce> getAnnonces() {
+         if (annonces == null) {
+            annonces = getFacade().findAll();
+        }
+        return annonces;
+    }
+
+    
+    
 
 }

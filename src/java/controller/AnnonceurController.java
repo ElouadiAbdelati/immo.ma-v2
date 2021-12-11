@@ -17,6 +17,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import service.AuthUser;
 
 @Named("annonceurController")
 @SessionScoped
@@ -28,7 +29,59 @@ public class AnnonceurController implements Serializable {
     private service.AnnonceurFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+   
+     
+    @EJB
+    private AuthUser authUser;
+    
 
+    public AuthUser getAuthUser() {
+        return authUser;
+    }
+
+    public void setAuthUser(AuthUser authUser) {
+        this.authUser = authUser;
+    }
+
+    public boolean isConnected() {
+        return authUser.getCurUser() != null;
+    }
+
+    public String signIn() {
+
+        int res = ejbFacade.seConnecter(getSelected().getEmail(), getSelected().getPassword());
+        if (res > 0) {
+            authUser.signIn(current);
+            return "/index?faces-redirect=true";
+        } else if (res == -1) {
+            JsfUtil.addErrorMessage("Login innexistant");
+        } else if (res == -2) {
+            JsfUtil.addErrorMessage("Password Incorrect innexistant");
+        }
+        current = null;
+        return null;
+    }
+
+    public String signUp() {
+        System.out.println("com.immo.controller.UserController.signUp()" + getSelected().getEmail());
+        System.out.println("com.fst.controler.UserController.signUp()");
+        int res = ejbFacade.seEnregister(getSelected());
+        System.out.println("com.fst.controler.UserController.signUp() : " + res);
+        if (res > 0) {
+            authUser.signIn(current);
+            return "/index?faces-redirect=true";
+        } else if (res == -1) {
+            JsfUtil.addErrorMessage("User not registred");
+        }
+        current = new Annonceur();
+        return null;
+    }
+
+    public String signOut() {
+        authUser.signOut();
+        return "/index?faces-redirect=true";
+
+    }
     public AnnonceurController() {
     }
 
