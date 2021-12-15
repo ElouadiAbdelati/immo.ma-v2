@@ -109,9 +109,11 @@
                                         <div class="input-group-addon"><i class="mdi mdi-hotel" /></div>
                                         <h:selectOneListbox id="nbrchambresSearch" 
                                                             class="form-control select2"
+                                                            size="1"
                                                             value="#{annonceController.nbrchambresSearch}" 
                                                             >
                                             <f:selectItem itemDisabled="true"  itemLabel="Min. Chambres à coucher" itemValue=""/>
+                                            <f:selectItem itemLabel="Toutes" itemValue="0"/>
                                             <f:selectItem itemLabel="1" itemValue="1"/>
                                             <f:selectItem itemLabel="2" itemValue="2"/>
                                             <f:selectItem itemLabel="3" itemValue="3"/>
@@ -131,24 +133,26 @@
                                     <div class="input-group">
 
                                         <div class="input-group-addon"><i class="mdi mdi-magnify-minus-outline" /></div>
-               
-                                            <h:selectOneListbox id="tailleMinimaleSearch" 
-                                                                class="form-control select2"
-                                                                value="#{annonceController.tailleMinimaleSearch}" 
-                                                                >
-                                                <f:selectItem itemDisabled="true"  itemLabel="Taille minimale" itemValue=""/>
-                                                <f:selectItem itemLabel="100" itemValue="100"/>
-                                                <f:selectItem itemLabel="200" itemValue="200"/>
-                                                <f:selectItem itemLabel="300" itemValue="300"/>
-                                                <f:selectItem itemLabel="400" itemValue="400"/>
-                                                <f:selectItem itemLabel="500" itemValue="500"/>
-                                                <f:selectItem itemLabel="600" itemValue="600"/>
-                                                <f:selectItem itemLabel="700" itemValue="700"/>
-                                                <f:selectItem itemLabel="800" itemValue="800"/>
-                                                <f:selectItem itemLabel="900" itemValue="900"/>
-                                                <f:selectItem itemLabel="1000" itemValue="1000"/>
-                                            </h:selectOneListbox>
-                                     
+
+                                        <h:selectOneListbox id="tailleMinimaleSearch" 
+                                                            class="form-control select2"
+                                                            size="1"
+                                                            value="#{annonceController.tailleMinimaleSearch}" 
+                                                            >
+                                            <f:selectItem itemDisabled="true"  itemLabel="Taille minimale" itemValue=""/>
+                                            <f:selectItem itemLabel="Toutes" itemValue="0"/>
+                                            <f:selectItem itemLabel="100" itemValue="100"/>
+                                            <f:selectItem itemLabel="200" itemValue="200"/>
+                                            <f:selectItem itemLabel="300" itemValue="300"/>
+                                            <f:selectItem itemLabel="400" itemValue="400"/>
+                                            <f:selectItem itemLabel="500" itemValue="500"/>
+                                            <f:selectItem itemLabel="600" itemValue="600"/>
+                                            <f:selectItem itemLabel="700" itemValue="700"/>
+                                            <f:selectItem itemLabel="800" itemValue="800"/>
+                                            <f:selectItem itemLabel="900" itemValue="900"/>
+                                            <f:selectItem itemLabel="1000" itemValue="1000"/>
+                                        </h:selectOneListbox>
+
                                     </div>
                                 </div>
 
@@ -157,22 +161,24 @@
                                     <div class="input-group">
 
                                         <div class="input-group-addon"><i class="mdi mdi-magnify-plus-outline" /></div>
-                                          <h:selectOneListbox id="tailleMaxSearch" 
-                                                                class="form-control select2"
-                                                                value="#{annonceController.tailleMaxSearch}" 
-                                                                >
-                                                <f:selectItem itemDisabled="true"  itemLabel="Taille max" itemValue=""/>
-                                                <f:selectItem itemLabel="1000" itemValue="1000"/>
-                                                <f:selectItem itemLabel="2000" itemValue="2000"/>
-                                                <f:selectItem itemLabel="3000" itemValue="3000"/>
-                                                <f:selectItem itemLabel="4000" itemValue="4000"/>
-                                                <f:selectItem itemLabel="5000" itemValue="5000"/>
-                                                <f:selectItem itemLabel="6000" itemValue="6000"/>
-                                                <f:selectItem itemLabel="7000" itemValue="7000"/>
-                                                <f:selectItem itemLabel="8000" itemValue="8000"/>
-                                                <f:selectItem itemLabel="9000" itemValue="9000"/>
-                                                <f:selectItem itemLabel="10000" itemValue="10000"/>
-                                            </h:selectOneListbox>
+                                        <h:selectOneListbox id="tailleMaxSearch" 
+                                                            class="form-control select2"
+                                                            size="1"
+                                                            value="#{annonceController.tailleMaxSearch}" 
+                                                            >
+                                            <f:selectItem itemDisabled="true"  itemLabel="Taille max" itemValue=""/>
+                                            <f:selectItem itemLabel="Toutes" itemValue="0"/>
+                                            <f:selectItem itemLabel="1000" itemValue="1000"/>
+                                            <f:selectItem itemLabel="2000" itemValue="2000"/>
+                                            <f:selectItem itemLabel="3000" itemValue="3000"/>
+                                            <f:selectItem itemLabel="4000" itemValue="4000"/>
+                                            <f:selectItem itemLabel="5000" itemValue="5000"/>
+                                            <f:selectItem itemLabel="6000" itemValue="6000"/>
+                                            <f:selectItem itemLabel="7000" itemValue="7000"/>
+                                            <f:selectItem itemLabel="8000" itemValue="8000"/>
+                                            <f:selectItem itemLabel="9000" itemValue="9000"/>
+                                            <f:selectItem itemLabel="10000" itemValue="10000"/>
+                                        </h:selectOneListbox>
                                     </div>
                                 </div>
 
@@ -182,10 +188,12 @@
 
                                         <div class="input-group-addon"><i class="mdi mdi-hot-tub" /></div>
                                         <h:selectOneListbox id="nbrThermesSearch" 
+                                                            size="1"
                                                             class="form-control select2"
                                                             value="#{annonceController.nbrThermesSearch}" 
                                                             >
                                             <f:selectItem itemDisabled="true"  itemLabel="Thermes" itemValue=""/>
+                                            <f:selectItem itemLabel="Toutes" itemValue="0"/>
                                             <f:selectItem itemLabel="1" itemValue="1"/>
                                             <f:selectItem itemLabel="2" itemValue="2"/>
                                             <f:selectItem itemLabel="3" itemValue="3"/>
@@ -202,9 +210,14 @@
 
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-6">
 
-                                    <div class="input-group"><button  class="btn btn-secondary btn-block no-radius font-weight-bold"
-                                                                      onclick="#{annonceController.search()}"
-                                                                      >CHERCHER</button>   </div>
+                                    <div class="input-group">
+
+                                        <h:commandLink  class="btn btn-secondary btn-block no-radius font-weight-bold" value = "CHERCHER" action = "#{annonceController.search()}" >
+                                            <f:ajax  execute='@form' render='@form'  />  
+                                            <f:ajax   render="annoncesDiv"  />  
+                                        </h:commandLink>
+
+                                    </div>
                                 </div>
                             </div>
                         </h:form>
@@ -300,41 +313,43 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
-                                    <div class="col-lg-4 col-md-4">
+                            <div class="row" >
+                                <h:panelGroup id="annoncesDiv">
+                                    <ui:repeat value="#{annonceController.annonces}" var="annonce" varStatus="metadata">
+                                        <div class="col-lg-4 col-md-4">
 
-                                        <div class="card card-list">
+                                            <div class="card card-list">
 
-                                            <a href="faces/detail_annonce.xhtml" >
+                                                <a href="faces/detail_annonce.xhtml" >
 
-                                                <div class="card-img">
+                                                    <div class="card-img">
 
-                                                    <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
+                                                        <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
 
-                                                    <div class="badge images-badge"><i class="mdi mdi-image-filter" /> 12</div>
-                                                    <span class="badge badge-primary">#{annonce.annonceType.type}</span>
-                                                    <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
-                                                </div>
+                                                        <div class="badge images-badge"><i class="mdi mdi-image-filter" /> 12</div>
+                                                        <span class="badge badge-primary">#{annonce.annonceType.type}</span>
+                                                        <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
+                                                    </div>
 
-                                                <div class="card-body">
+                                                    <div class="card-body">
 
-                                                    <h2 class="text-primary mb-2 mt-0">
-                                                        #{annonce.prix} #{annonce.devise} <small>/Par mois</small>
-                                                    </h2>
+                                                        <h2 class="text-primary mb-2 mt-0">
+                                                            #{annonce.prix} #{annonce.devise} <small>/Par mois</small>
+                                                        </h2>
 
-                                                    <h5 class="card-title mb-2">#{annonce.title}</h5>
+                                                        <h5 class="card-title mb-2">#{annonce.title}</h5>
 
-                                                    <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
-                                                </div>
+                                                        <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
+                                                    </div>
 
 
-                                            </a>
+                                                </a>
 
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </c:forEach>
+                                    </ui:repeat>
+                                </h:panelGroup>
                             </div>
 
 

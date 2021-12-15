@@ -268,6 +268,8 @@ public class AnnonceController implements Serializable {
         if (annonces == null) {
             annonces = getFacade().findAll();
         }
+        System.out.println("controller.AnnonceController.getAnnonces() " + annonces.size());
+
         return annonces;
     }
 
@@ -369,12 +371,10 @@ public class AnnonceController implements Serializable {
     }
 
     public void search() {
-        if(citySearch!=null) System.out.println("search() citySearch " + citySearch.getName());
-        if(annonceTypeSearch!=null)  System.out.println("search() annonceTypeSearch " + annonceTypeSearch.getType());
-        System.out.println("search() nbrchambresSearch " + nbrchambresSearch);
-        System.out.println("search() tailleMinimaleSearch " + tailleMinimaleSearch);
-        System.out.println("search() tailleMaxSearch " + tailleMaxSearch);
-        System.out.println("search() nbrThermesSearch " + nbrThermesSearch);
+        this.annonces = ejbFacade.search(citySearch, annonceTypeSearch, nbrchambresSearch, tailleMinimaleSearch, tailleMaxSearch, nbrThermesSearch);
+        
     }
+
+
 
 }
