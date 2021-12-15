@@ -63,6 +63,7 @@
                                             >
 
                                             <f:selectItem itemDisabled="true"  itemLabel="N'importe quel emplacement" itemValue=""/>
+                                             <f:selectItem  itemLabel="Toutes" itemValue="#{null}"/>
                                             <f:selectItems value="#{annonceController.citys}" var="cityItem" 
                                                            itemLabel="#{cityItem.name}" itemValue="#{cityItem}" />
                                         </h:selectOneListbox>  
@@ -96,6 +97,7 @@
                                             >
 
                                             <f:selectItem itemDisabled="true"  itemLabel="N'importe quel type" itemValue=""/>
+                                            <f:selectItem  itemLabel="Toutes" itemValue="#{null}"/>
                                             <f:selectItems value="#{annonceController.annonceTypes}" var="cityItem" 
                                                            itemLabel="#{annonceTypeItem.type}" itemValue="#{annonceTypeItem}" />
                                         </h:selectOneListbox>
