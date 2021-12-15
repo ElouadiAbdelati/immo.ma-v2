@@ -23,6 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.primefaces.json.JSONObject;
+import javax.ejb.EJB;
 
 /**
  *
@@ -33,6 +34,7 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
 
     @PersistenceContext(unitName = "immo.maPU")
     private EntityManager em;
+
 
     public List<Annonce> search(City city, AnnonceType annonceType,
             int nbrchambresSearch, int tailleMinimaleSearch, int tailleMaxSearch, int nbrThermesSearch) {
@@ -105,36 +107,29 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
             annonce.setTitle((String) line[15]);
             annonce.setToilet((Integer) line[16]);
 
-            AnnonceType annonceType1 = new AnnonceType();
-            annonceType1.setId((Long) line[17]);
+            AnnonceType annonceType1 =  getEntityManager().find(AnnonceType.class,(Long) line[17]);
             annonce.setAnnonceType(annonceType1);
 
-            Category category = new Category();
-            category.setId((Long) line[18]);
+            Category category = getEntityManager().find(Category.class,(Long) line[18]);
             annonce.setCategory(category);
 
-            Secteur secteur = new Secteur();
-            secteur.setId((Long) line[19]);
+            Secteur secteur = getEntityManager().find(Secteur.class,(Long) line[19]);
             annonce.setSecteur(secteur);
 
-            Annonceur annonceur = new Annonceur();
-            annonceur.setId((Long) line[20]);
+            Annonceur annonceur = getEntityManager().find(Annonceur.class,(Long) line[20]);
             annonce.setAnnonceur(annonceur);
 
             list.add(annonce);
         }
-        
-         System.err.println("list " + list.size());
-         
+
+        System.err.println("list " + list.size());
+
         if (list == null || list.isEmpty()) {
             return new ArrayList<>();
         }
-        
-       
+
         return list;
     }
-    
-   
 
     @Override
     protected EntityManager getEntityManager() {
@@ -144,5 +139,6 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
     public AnnonceFacade() {
         super(Annonce.class);
     }
+
 
 }
