@@ -4,7 +4,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       >
     <ui:composition template="/template.xhtml">
-       
+
         <ui:define name="body">
             <!--  Main Slider With Form -->
             <section class="osahan-slider">
@@ -35,10 +35,10 @@
 
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" href="#home">For Sale</a>
+                                <a class="nav-link active" id="home-tab" href="#home">À ACHETER</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" href="#profile">For Rent</a>
+                                <a class="nav-link" id="profile-tab" href="#profile">À LOUER</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -62,159 +62,13 @@
                                                 <option value="">
                                                     Locations
                                                 </option>
-                                                <option value="AL">
-                                                    Alabama
-                                                </option>
-                                                <option value="AK">
-                                                    Alaska
-                                                </option>
-                                                <option value="AZ">
-                                                    Arizona
-                                                </option>
-                                                <option value="AR">
-                                                    Arkansas
-                                                </option>
-                                                <option value="CA">
-                                                    California
-                                                </option>
-                                                <option value="CO">
-                                                    Colorado
-                                                </option>
-                                                <option value="CT">
-                                                    Connecticut
-                                                </option>
-                                                <option value="DE">
-                                                    Delaware
-                                                </option>
-                                                <option value="DC">
-                                                    District Of Columbia
-                                                </option>
-                                                <option value="FL">
-                                                    Florida
-                                                </option>
-                                                <option value="GA">
-                                                    Georgia
-                                                </option>
-                                                <option value="HI">
-                                                    Hawaii
-                                                </option>
-                                                <option value="ID">
-                                                    Idaho
-                                                </option>
-                                                <option value="IL">
-                                                    Illinois
-                                                </option>
-                                                <option value="IN">
-                                                    Indiana
-                                                </option>
-                                                <option value="IA">
-                                                    Iowa
-                                                </option>
-                                                <option value="KS">
-                                                    Kansas
-                                                </option>
-                                                <option value="KY">
-                                                    Kentucky
-                                                </option>
-                                                <option value="LA">
-                                                    Louisiana
-                                                </option>
-                                                <option value="ME">
-                                                    Maine
-                                                </option>
-                                                <option value="MD">
-                                                    Maryland
-                                                </option>
-                                                <option value="MA">
-                                                    Massachusetts
-                                                </option>
-                                                <option value="MI">
-                                                    Michigan
-                                                </option>
-                                                <option value="MN">
-                                                    Minnesota
-                                                </option>
-                                                <option value="MS">
-                                                    Mississippi
-                                                </option>
-                                                <option value="MO">
-                                                    Missouri
-                                                </option>
-                                                <option value="MT">
-                                                    Montana
-                                                </option>
-                                                <option value="NE">
-                                                    Nebraska
-                                                </option>
-                                                <option value="NV">
-                                                    Nevada
-                                                </option>
-                                                <option value="NH">
-                                                    New Hampshire
-                                                </option>
-                                                <option value="NJ">
-                                                    New Jersey
-                                                </option>
-                                                <option value="NM">
-                                                    New Mexico
-                                                </option>
-                                                <option value="NY">
-                                                    New York
-                                                </option>
-                                                <option value="NC">
-                                                    North Carolina
-                                                </option>
-                                                <option value="ND">
-                                                    North Dakota
-                                                </option>
-                                                <option value="OH">
-                                                    Ohio
-                                                </option>
-                                                <option value="OK">
-                                                    Oklahoma
-                                                </option>
-                                                <option value="OR">
-                                                    Oregon
-                                                </option>
-                                                <option value="PA">
-                                                    Pennsylvania
-                                                </option>
-                                                <option value="RI">
-                                                    Rhode Island
-                                                </option>
-                                                <option value="SC">
-                                                    South Carolina
-                                                </option>
-                                                <option value="SD">
-                                                    South Dakota
-                                                </option>
-                                                <option value="TN">
-                                                    Tennessee
-                                                </option>
-                                                <option value="TX">
-                                                    Texas
-                                                </option>
-                                                <option value="UT">
-                                                    Utah
-                                                </option>
-                                                <option value="VT">
-                                                    Vermont
-                                                </option>
-                                                <option value="VA">
-                                                    Virginia
-                                                </option>
-                                                <option value="WA">
-                                                    Washington
-                                                </option>
-                                                <option value="WV">
-                                                    West Virginia
-                                                </option>
-                                                <option value="WI">
-                                                    Wisconsin
-                                                </option>
-                                                <option value="WY">
-                                                    Wyoming
-                                                </option></select>
+                                                <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
+
+                                                    <option value="">
+                                                       #{annonce.secteur.city.name}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -224,37 +78,14 @@
                                             </div>
                                             <select class="form-control select2 no-radius">
                                                 <option value="">
-                                                    Property Type
+                                                     Type de la Propriété
                                                 </option>
-                                                <option value="">
-                                                    House/Villa
-                                                </option>
-                                                <option value="">
-                                                    Flat
-                                                </option>
-                                                <option value="">
-                                                    Plot/Land
-                                                </option>
-                                                <option value="">
-                                                    Office Space
-                                                </option>
-                                                <option value="">
-                                                    Shop/Showroom
-                                                </option>
-                                                <option value="">
-                                                    Commercial Land
-                                                </option>
-                                                <option value="">
-                                                    Warehouse/ Godown
-                                                </option>
-                                                <option value="">
-                                                    Industrial Building
-                                                </option></select>
+                                                </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit"
-                                                class="btn btn-secondary btn-block no-radius font-weight-bold">SEARCH</button>
+                                                class="btn btn-secondary btn-block no-radius font-weight-bold">RECHERCHER</button>
                                     </div>
                                 </div>
                             </div>
@@ -277,30 +108,13 @@
                                                 <option value="">
                                                     Property Type
                                                 </option>
-                                                <option value="">
-                                                    House/Villa
-                                                </option>
-                                                <option value="">
-                                                    Flat
-                                                </option>
-                                                <option value="">
-                                                    Plot/Land
-                                                </option>
-                                                <option value="">
-                                                    Office Space
-                                                </option>
-                                                <option value="">
-                                                    Shop/Showroom
-                                                </option>
-                                                <option value="">
-                                                    Commercial Land
-                                                </option>
-                                                <option value="">
-                                                    Warehouse/ Godown
-                                                </option>
-                                                <option value="">
-                                                    Industrial Building
-                                                </option></select>
+                                                  <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
+
+                                                    <option value="">
+                                                       #{annonce.annonceType.type}
+                                                    </option>
+                                                </c:forEach>
+                                                </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -311,13 +125,7 @@
                             </div>
                         </div>
 
-                        <div class="top-search">
-                            <strong><i class="mdi mdi-keyboard"></i> Top Search</strong>
-                            <a href="#">Flat</a> <a href="#">Plot/Land</a> <a
-                                href="#">Office Space</a> <a href="#">Shop/Showroom</a>
-                            <a href="#">Commercial Land</a> <a href="#">Warehouse/
-                                Godown</a> <a href="#">Industrial Building</a>
-                        </div>
+                         
                     </div>
                 </div>
             </section>
@@ -330,131 +138,60 @@
                     </h2>
                 </div>
                 <div class="container">
-                 <div class="row">
-                                <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
-                                    <div class="col-lg-4 col-md-4">
+                    <div class="row">
+                        <c:forEach items="#{annonceController.annoncesLimit}" var="annonce" varStatus="metadata">
+                            <div class="col-lg-4 col-md-4">
 
-                                        <div class="card card-list">
-                                           
-                                            <a href="faces/detail_annonce.xhtml" >
-                                                
-                                                <div class="card-img">
+                                <div class="card card-list">
 
-                                                    <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
+                                    <a href="faces/detail_annonce.xhtml" >
 
-                                                    <div class="badge images-badge"><i class="mdi mdi-image-filter" /> 12</div>
-                                                    <span class="badge badge-primary">#{annonce.annonceType.type}</span>
-                                                    <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
-                                                </div>
+                                        <div class="card-img">
 
-                                                <div class="card-body">
+                                            <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
 
-                                                    <h2 class="text-primary mb-2 mt-0">
-                                                        #{annonce.prix} #{annonce.devise} <small>/Par mois</small>
-                                                    </h2>
-
-                                                    <h5 class="card-title mb-2">#{annonce.title}</h5>
-
-                                                    <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
-                                                </div>
-
-
-                                            </a>
-                                            
+                                            <div class="badge images-badge"><i class="mdi mdi-image-filter" /> 12</div>
+                                            <span class="badge badge-primary">#{annonce.annonceType.type}</span>
+                                            <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
                                         </div>
-                                    </div>
 
-                                </c:forEach>
+                                        <div class="card-body">
+
+                                            <h2 class="text-primary mb-2 mt-0">
+                                                #{annonce.prix} #{annonce.devise} <small>/Par mois</small>
+                                            </h2>
+
+                                            <h5 class="card-title mb-2">#{annonce.title}</h5>
+
+                                            <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
+                                        </div>
+
+
+                                    </a>
+
+                                </div>
                             </div>
+
+                        </c:forEach>
+                    </div>
                     <div class="row mt-4">
                         <div class="col-md-12 text-center">
                             <button class="btn btn-secondary font-weight-bold btn-lg">
-                                <h:link outcome="/liste_annonces" value="VIEW ALL"/> 
+                                <h:link outcome="/liste_annonces" value="AFICHER TOUT"/> 
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
             <!--  End Properties List -->
-            <!--  Trusted Agents -->
-            <section class="section-padding">
-                <div class="section-title text-center mb-5">
-                    <h2>
-                        Trusted Agents
-                    </h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    </p>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4">
-                            <div class="agents-card text-center">
-                                <img class="img-fluid mb-4" src="./ressources/img/user/1.jpg" alt="" />
-                                <p class="mb-4">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been.
-                                </p>
-                                <h6 class="mb-0 text-primary">
-                                    - Stave Martin <span class="star-rating"> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star-half text-warning"></i> </span>
-                                </h6>
-                                <small>Buying Agent</small>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="agents-card text-center">
-                                <img class="img-fluid mb-4" src="./ressources/img/user/2.jpg" alt="" />
-                                <p class="mb-4">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been.
-                                </p>
-                                <h6 class="mb-0 text-primary">
-                                    - Mark Smith <span class="star-rating"> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star-half text-warning"></i> </span>
-                                </h6>
-                                <small>Selling Agent</small>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="agents-card text-center">
-                                <img class="img-fluid mb-4" src="./ressources/img/user/3.jpg" alt="" />
-                                <p class="mb-4">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been.
-                                </p>
-                                <h6 class="mb-0 text-primary">
-                                    - Ryan Printz <span class="star-rating"> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star text-warning"></i> <i
-                                            class="mdi mdi-star-half text-warning"></i> </span>
-                                </h6>
-                                <small>Real Estate Broker</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--  End Trusted Agents -->
+             
             <!--  Blog -->
             <section class="section-padding border-top">
                 <div class="section-title text-center mb-5">
                     <h2>
-                        Blogs We Wrote For You
+                        Blogs que Nous avons écrit pour Vous
                     </h2>
-                    <p>
-                        Lorem ipsum dolor sit amet.
-                    </p>
+                     
                 </div>
                 <div class="container">
                     <div class="row">
@@ -533,9 +270,8 @@
             <!--  End Blog -->
             <!--  Join Team -->
             <section class="section-padding bg-white text-center">
-                <h2 class="mt-0">Join our professional team et agents<br/>to start selling your house</h2>
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <button type="button" class="btn btn-primary">Contact Us</button> <button type="button" class="btn btn-outline-primary">Read More</button>
+                <h2 class="mt-0">Rejoignez notre équipe professionnelle et nos agents<br/>pour commencer à vendre votre maison</h2>
+             <br/>    <button type="button" class="btn btn-primary">Contactez-nous</button>  
             </section>
             <!--  End Join Team -->
         </ui:define>

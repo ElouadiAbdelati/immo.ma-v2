@@ -27,10 +27,13 @@ public class AnnonceController implements Serializable {
     private DataModel items = null;
     
     private List<Annonce>  annonces =null;
-            
+        private List<Annonce>  annoncesLimit =null;
+
+     int[] range={0,5};
     @EJB
     private service.AnnonceFacade ejbFacade;
     private PaginationHelper pagination;
+
     private int selectedItemIndex;
 
     public AnnonceController() {
@@ -242,7 +245,14 @@ public class AnnonceController implements Serializable {
         }
         return annonces;
     }
-
+    
+    public List<Annonce> getAnnoncesLimit() {
+         if (annoncesLimit == null) {
+            annoncesLimit = getFacade().findLastInserted(range);
+        }
+        return annoncesLimit;
+    }
+    
     
     
 
