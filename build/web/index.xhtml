@@ -2,10 +2,13 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      
       >
     <ui:composition template="/template.xhtml">
 
         <ui:define name="body">
+
+           
             <!--  Main Slider With Form -->
             <section class="osahan-slider">
                 <div id="osahanslider" class="carousel slide">
@@ -65,7 +68,7 @@
                                                 <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
 
                                                     <option value="">
-                                                       #{annonce.secteur.city.name}
+                                                        #{annonce.secteur.city.name}
                                                     </option>
                                                 </c:forEach>
                                             </select>
@@ -78,9 +81,9 @@
                                             </div>
                                             <select class="form-control select2 no-radius">
                                                 <option value="">
-                                                     Type de la Propriété
+                                                    Type de la Propriété
                                                 </option>
-                                                </select>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -108,13 +111,13 @@
                                                 <option value="">
                                                     Property Type
                                                 </option>
-                                                  <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
+                                                <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
 
                                                     <option value="">
-                                                       #{annonce.annonceType.type}
+                                                        #{annonce.annonceType.type}
                                                     </option>
                                                 </c:forEach>
-                                                </select>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -125,7 +128,7 @@
                             </div>
                         </div>
 
-                         
+
                     </div>
                 </div>
             </section>
@@ -184,14 +187,14 @@
                 </div>
             </section>
             <!--  End Properties List -->
-             
+
             <!--  Blog -->
             <section class="section-padding border-top">
                 <div class="section-title text-center mb-5">
                     <h2>
                         Blogs que Nous avons écrit pour Vous
                     </h2>
-                     
+
                 </div>
                 <div class="container">
                     <div class="row">
@@ -271,7 +274,7 @@
             <!--  Join Team -->
             <section class="section-padding bg-white text-center">
                 <h2 class="mt-0">Rejoignez notre équipe professionnelle et nos agents<br/>pour commencer à vendre votre maison</h2>
-             <br/>    <button type="button" class="btn btn-primary">Contactez-nous</button>  
+                <br/>    <button type="button" class="btn btn-primary">Contactez-nous</button>  
             </section>
             <!--  End Join Team -->
         </ui:define>

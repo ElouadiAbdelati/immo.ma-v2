@@ -23,6 +23,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jms.producer.Producer;
 import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
@@ -387,6 +388,7 @@ public class AnnonceController implements Serializable {
 
     public void search() {
         this.annonces = ejbFacade.search(citySearch, annonceTypeSearch, nbrchambresSearch, tailleMinimaleSearch, tailleMaxSearch, nbrThermesSearch);
+        //Producer.sendMessage("Hello ....... ");
         
     }
 
