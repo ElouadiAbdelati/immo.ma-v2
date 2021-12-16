@@ -39,7 +39,7 @@ public class City implements Serializable {
     public void setCodePostal(String codePostal) {
         this.codePostal = codePostal;
     }
- 
+
     public Long getId() {
         return id;
     }
@@ -64,8 +64,6 @@ public class City implements Serializable {
         this.annonceurs = annonceurs;
     }
 
-
-  
     public List<Secteur> getSecteurs() {
         return secteurs;
     }
@@ -74,14 +72,23 @@ public class City implements Serializable {
         this.secteurs = secteurs;
     }
 
-   
-
     @Override
     public String toString() {
         return name;
     }
-    
-    
 
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof City) && (id != null)
+                ? id.equals(((City) other).id)
+                : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return (id != null)
+                ? (this.getClass().hashCode() + id.hashCode())
+                : super.hashCode();
+    }
 
 }

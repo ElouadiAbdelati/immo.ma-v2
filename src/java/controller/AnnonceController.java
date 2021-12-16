@@ -1,6 +1,11 @@
 package controller;
 
 import bean.Annonce;
+import bean.AnnonceType;
+import bean.City;
+import bean.helper.AnnonceTypeAnnonce;
+import bean.helper.CategoryAnnonce;
+import bean.helper.CityAnnonce;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
 import service.AnnonceFacade;
@@ -18,6 +23,9 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import service.AnnonceTypeFacade;
+import service.CategoryFacade;
+import service.CityFacade;
 
 @Named("annonceController")
 @SessionScoped
@@ -25,13 +33,35 @@ public class AnnonceController implements Serializable {
 
     private Annonce current;
     private DataModel items = null;
-    
-    private List<Annonce>  annonces =null;
-        private List<Annonce>  annoncesLimit =null;
 
-     int[] range={0,5};
+    private List<Annonce> annoncesLimit = null;
+
+    int[] range = { 0, 5 };
+
+    private List<Annonce> annonces = null;
+    private List<CategoryAnnonce> categoryAnnonces = null;
+    private List<AnnonceTypeAnnonce> annonceTypeAnnonces = null;
+    private List<CityAnnonce> cityAnnonces = null;
+
+    private List<City> citys = null;
+    private List<AnnonceType> annonceTypes = null;
+    private City citySearch;
+    private AnnonceType annonceTypeSearch;
+    private int nbrchambresSearch;
+    private int tailleMinimaleSearch;
+    private int tailleMaxSearch;
+    private int nbrThermesSearch;
+
     @EJB
     private service.AnnonceFacade ejbFacade;
+
+    @EJB
+    private CategoryFacade categoryFacade;
+    @EJB
+    private AnnonceTypeFacade annonceTypeFacade;
+    @EJB
+    private CityFacade cityFacade;
+
     private PaginationHelper pagination;
 
     private int selectedItemIndex;
@@ -62,7 +92,8 @@ public class AnnonceController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade()
+                            .findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() }));
                 }
             };
         }
@@ -156,7 +187,7 @@ public class AnnonceController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
         }
     }
 
@@ -207,8 +238,8 @@ public class AnnonceController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AnnonceController controller = (AnnonceController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "annonceController");
+            AnnonceController controller = (AnnonceController) facesContext.getApplication().getELResolver()
+                    .getValue(facesContext.getELContext(), null, "annonceController");
             return controller.getAnnonce(getKey(value));
         }
 
@@ -233,27 +264,131 @@ public class AnnonceController implements Serializable {
                 Annonce o = (Annonce) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Annonce.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
+                        + "; expected type: " + Annonce.class.getName());
             }
         }
 
     }
 
     public List<Annonce> getAnnonces() {
-         if (annonces == null) {
+        if (annonces == null) {
             annonces = getFacade().findAll();
         }
+        System.out.println("controller.AnnonceController.getAnnonces() " + annonces.size());
+
         return annonces;
-    }
-    
+    } 
     public List<Annonce> getAnnoncesLimit() {
-         if (annoncesLimit == null) {
+        if (annoncesLimit == null) {
             annoncesLimit = getFacade().findLastInserted(range);
         }
         return annoncesLimit;
     }
-    
-    
-    
 
+   
+
+    public CategoryFacade getCategoryFacade() {
+        return categoryFacade;
+    }
+
+    public List<CategoryAnnonce> getCategoryAnnonces() {
+
+        if (categoryAnnonces == null) {
+            categoryAnnonces = getCategoryFacade().coutAnnonceActiveByCategory();
+        }
+        return categoryAnnonces;
+    }
+
+    public AnnonceTypeFacade getAnnonceTypeFacade() {
+        return annonceTypeFacade;
+    }
+
+    public List<AnnonceTypeAnnonce> getAnnonceTypeAnnonces() {
+        if (annonceTypeAnnonces == null) {
+            annonceTypeAnnonces = getAnnonceTypeFacade().countAnnonceActiveByType();
+        }
+        return annonceTypeAnnonces;
+    }
+
+    public List<CityAnnonce> getCityAnnonces() {
+        if (cityAnnonces == null) {
+            cityAnnonces = getCityFacade().countAnnonceActiveByCity();
+        }
+        return cityAnnonces;
+    }
+
+    public CityFacade getCityFacade() {
+        return cityFacade;
+    }
+
+    public List<City> getCitys() {
+        if (citys == null) {
+            citys = getCityFacade().findAll();
+
+        }
+        return citys;
+    }
+
+    public List<AnnonceType> getAnnonceTypes() {
+        if (annonceTypes == null) {
+            annonceTypes = getAnnonceTypeFacade().findAll();
+        }
+        return annonceTypes;
+    }
+
+    public City getCitySearch() {
+        return citySearch;
+    }
+
+    public void setCitySearch(City citySearch) {
+        this.citySearch = citySearch;
+    }
+
+    public AnnonceType getAnnonceTypeSearch() {
+        return annonceTypeSearch;
+    }
+
+    public void setAnnonceTypeSearch(AnnonceType annonceTypeSearch) {
+        this.annonceTypeSearch = annonceTypeSearch;
+    }
+
+    public int getNbrchambresSearch() {
+        return nbrchambresSearch;
+    }
+
+    public void setNbrchambresSearch(int nbrchambresSearch) {
+        this.nbrchambresSearch = nbrchambresSearch;
+    }
+
+    public int getTailleMinimaleSearch() {
+        return tailleMinimaleSearch;
+    }
+
+    public void setTailleMinimaleSearch(int tailleMinimaleSearch) {
+        this.tailleMinimaleSearch = tailleMinimaleSearch;
+    }
+
+    public int getTailleMaxSearch() {
+        return tailleMaxSearch;
+    }
+
+    public void setTailleMaxSearch(int tailleMaxSearch) {
+        this.tailleMaxSearch = tailleMaxSearch;
+    }
+
+    public int getNbrThermesSearch() {
+        return nbrThermesSearch;
+    }
+
+    public void setNbrThermesSearch(int nbrThermesSearch) {
+        this.nbrThermesSearch = nbrThermesSearch;
+    }
+
+    public void search() {
+        this.annonces = ejbFacade.search(citySearch, annonceTypeSearch, nbrchambresSearch, tailleMinimaleSearch, tailleMaxSearch, nbrThermesSearch);
+        
+    }
+
+ 
 }
