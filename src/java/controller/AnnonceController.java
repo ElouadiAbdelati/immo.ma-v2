@@ -1,17 +1,23 @@
 package controller;
 
 import bean.Annonce;
+import bean.AnnonceStatus;
 import bean.AnnonceType;
 import bean.City;
 import bean.helper.AnnonceTypeAnnonce;
 import bean.helper.CategoryAnnonce;
 import bean.helper.CityAnnonce;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
+import java.io.IOException;
 import service.AnnonceFacade;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -24,6 +30,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import jms.producer.Producer;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
@@ -66,8 +74,36 @@ public class AnnonceController implements Serializable {
     private PaginationHelper pagination;
 
     private int selectedItemIndex;
+    
+    
+    private List<Boolean> picineSelectValues = Arrays.asList(true, false);
+    private UploadedFile uploadedFile;
 
     public AnnonceController() {
+    }
+
+    public void init() {
+        System.out.println("init !!!!!!");
+        current = new Annonce();
+        current.setActive(true);
+        current.setStatus(AnnonceStatus.EN_COURS);
+    }
+
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
+        System.out.println("controller.AnnonceController.handleFileUpload()");
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "soulcloudname",
+                "api_key", "516235241917812",
+                "api_secret", "lZZVGEe68m3Y21EX_PnO8dtXdd8"));
+
+        Map uploadResult = cloudinary.uploader().upload(event.getFile().getContents(), ObjectUtils.asMap("resource_type", "auto"));
+        String url = uploadResult.get("url").toString();
+        current.setImagePath(url);
+    }
+
+    public void showSelected() {
+        System.out.println("controller.AnnonceController.showSelected()");
+        System.out.println(current.toString());
     }
 
     public Annonce getSelected() {
@@ -119,6 +155,7 @@ public class AnnonceController implements Serializable {
     }
 
     public String create() {
+        System.out.println("dkhl l create");
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceCreated"));
@@ -392,5 +429,28 @@ public class AnnonceController implements Serializable {
         
     }
 
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
+    }
+
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
+    }
+
+    public Annonce getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Annonce current) {
+        this.current = current;
+    }
+
+    public List<Boolean> getPicineSelectValues() {
+        return picineSelectValues;
+    }
+
+    public void setPicineSelectValues(List<Boolean> picineSelectValues) {
+        this.picineSelectValues = picineSelectValues;
+    }
  
 }

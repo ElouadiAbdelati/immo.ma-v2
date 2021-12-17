@@ -56,6 +56,8 @@ public class Annonce implements Serializable {
 
     @ManyToOne
     private Secteur secteur;
+    
+    private String imagePath;
 
     public Long getId() {
         return id;
@@ -225,5 +227,19 @@ public class Annonce implements Serializable {
         this.secteur = secteur;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Annonce{" + "id=" + id + ", title=" + title + ", reference=" + reference + ", description=" + description + ", address=" + address + ", piscine=" + piscine + ", pieces=" + pieces + ", active=" + active + ", surface=" + surface + ", devise=" + devise + ", prix=" + prix + ", chamber=" + chamber + ", latitude=" + latitude + ", longitude=" + longitude + ", department=" + department + ", toilet=" + toilet + ", status=" + status + ", annonceur=" + annonceur + ", category=" + category + ", annonceType=" + annonceType + ", secteur=" + secteur + ", imagePath=" + imagePath + '}';
+    }
+
+    
     
 }
