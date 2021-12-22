@@ -41,6 +41,9 @@ import service.CityFacade;
 public class AnnonceController implements Serializable {
 
     private Annonce current;
+    private Annonce annonceDetail;
+    private Long annonceDetailId;
+
     private DataModel items = null;
 
     private List<Annonce> annoncesLimit = null;
@@ -428,6 +431,14 @@ public class AnnonceController implements Serializable {
         //Producer.sendMessage("Hello ....... ");
         
     }
+    
+    public String loadAnnonceDetail(){
+        System.out.println("loadAnnonceDetail " +getAnnonceDetail().toString() + annonceDetailId );
+        annonceDetail = getFacade()
+                .find(annonceDetailId);
+        if(annonceDetail==null) return "/index?faces-redirect=true";
+        return "";
+    }
 
     public UploadedFile getUploadedFile() {
         return uploadedFile;
@@ -452,5 +463,21 @@ public class AnnonceController implements Serializable {
     public void setPicineSelectValues(List<Boolean> picineSelectValues) {
         this.picineSelectValues = picineSelectValues;
     }
+
+    public Annonce getAnnonceDetail() {
+        if(annonceDetail==null) return  new Annonce();
+        return annonceDetail;
+    }
+
+    public Long getAnnonceDetailId() {
+        return annonceDetailId;
+    }
+
+    public void setAnnonceDetailId(Long annonceDetailId) {
+        this.annonceDetailId = annonceDetailId;
+    }
+    
+    
+    
  
 }

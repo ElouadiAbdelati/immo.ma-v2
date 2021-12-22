@@ -314,46 +314,35 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <h:panelGroup id="annoncesDiv">
+                            <h:panelGroup id="annoncesDiv">
+                                <div class="row">
                                     <c:forEach items="#{annonceController.annonces}" var="annonce" varStatus="metadata">
                                         <div class="col-lg-4 col-md-4">
 
                                             <div class="card card-list">
-
-                                                <a href="faces/detail_annonce.xhtml" >
-
+                                                <h:link outcome="faces/detail_annonce.xhtml" >
+                                                    <f:param name="annonceId" value="#{annonce.id}"/>
                                                     <div class="card-img">
-
                                                         <div class="love-badge text-danger"><i class="mdi mdi-heart" /></div>
-
                                                         <div class="badge images-badge"><i class="mdi mdi-image-filter" /> 12</div>
                                                         <span class="badge badge-primary">#{annonce.annonceType.type}</span>
                                                         <img class="card-img-top" src="./ressources/img/list/1.png" alt="Card image cap" />
                                                     </div>
 
                                                     <div class="card-body">
-
                                                         <h2 class="text-primary mb-2 mt-0">
                                                             #{annonce.prix} #{annonce.devise} <small>/Par mois</small>
                                                         </h2>
-
                                                         <h5 class="card-title mb-2">#{annonce.title}</h5>
 
                                                         <h6 class="card-subtitle mt-1 mb-0 text-muted"><i class="mdi mdi-home-map-marker" /> #{annonce.surface}</h6>
                                                     </div>
-
-
-                                                </a>
-
+                                                </h:link>
                                             </div>
                                         </div>
-
                                     </c:forEach>
-                                </h:panelGroup>
-                            </div>
-
+                                </div>
+                            </h:panelGroup>
 
                             <nav class="mt-5">
 
