@@ -11,10 +11,17 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import service.AnnonceFacade;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +36,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
 import jms.producer.Producer;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -48,7 +56,7 @@ public class AnnonceController implements Serializable {
 
     private List<Annonce> annoncesLimit = null;
 
-    int[] range = { 0, 5 };
+    int[] range = {0, 5};
 
     private List<Annonce> annonces = null;
     private List<CategoryAnnonce> categoryAnnonces = null;
@@ -77,8 +85,7 @@ public class AnnonceController implements Serializable {
     private PaginationHelper pagination;
 
     private int selectedItemIndex;
-    
-    
+
     private List<Boolean> picineSelectValues = Arrays.asList(true, false);
     private UploadedFile uploadedFile;
 
@@ -133,7 +140,7 @@ public class AnnonceController implements Serializable {
                 @Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(getFacade()
-                            .findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() }));
+                            .findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -228,7 +235,7 @@ public class AnnonceController implements Serializable {
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -319,15 +326,14 @@ public class AnnonceController implements Serializable {
         System.out.println("controller.AnnonceController.getAnnonces() " + annonces.size());
 
         return annonces;
-    } 
+    }
+
     public List<Annonce> getAnnoncesLimit() {
         if (annoncesLimit == null) {
             annoncesLimit = getFacade().findLastInserted(range);
         }
         return annoncesLimit;
     }
-
-   
 
     public CategoryFacade getCategoryFacade() {
         return categoryFacade;
@@ -429,14 +435,16 @@ public class AnnonceController implements Serializable {
     public void search() {
         this.annonces = ejbFacade.search(citySearch, annonceTypeSearch, nbrchambresSearch, tailleMinimaleSearch, tailleMaxSearch, nbrThermesSearch);
         //Producer.sendMessage("Hello ....... ");
-        
+
     }
-    
-    public String loadAnnonceDetail(){
-        System.out.println("loadAnnonceDetail " +getAnnonceDetail().toString() + annonceDetailId );
+
+    public String loadAnnonceDetail() {
+        System.out.println("loadAnnonceDetail " + getAnnonceDetail().toString() + annonceDetailId);
         annonceDetail = getFacade()
                 .find(annonceDetailId);
-        if(annonceDetail==null) return "/index?faces-redirect=true";
+        if (annonceDetail == null) {
+            return "/index?faces-redirect=true";
+        }
         return "";
     }
 
@@ -465,7 +473,9 @@ public class AnnonceController implements Serializable {
     }
 
     public Annonce getAnnonceDetail() {
-        if(annonceDetail==null) return  new Annonce();
+        if (annonceDetail == null) {
+            return new Annonce();
+        }
         return annonceDetail;
     }
 
@@ -476,8 +486,45 @@ public class AnnonceController implements Serializable {
     public void setAnnonceDetailId(Long annonceDetailId) {
         this.annonceDetailId = annonceDetailId;
     }
-    
-    
-    
- 
+
+    private Part uploadedFileAnnonce; // +getter+setter
+    private String fileName;
+    private byte[] fileContents;
+   
+    public void upload() {
+        
+//        
+//        <h:form  enctype="multipart/form-data" >
+//                  <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
+//                         <f:ajax listener="#{annonceController.upload}" />
+//                   </h:inputFile>
+//       </h:form>
+        fileName = Paths.get(uploadedFileAnnonce.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+        System.out.println("fileName  " + fileName);
+
+        try (InputStream input = uploadedFileAnnonce.getInputStream()) {
+            StringBuilder textBuilder = new StringBuilder();
+            try (Reader reader = new BufferedReader(new InputStreamReader(input, Charset.forName(StandardCharsets.UTF_8.name())))) {
+                int c = 0;
+                while ((c = reader.read()) != -1) {
+                    textBuilder.append((char) c);
+                }
+            }
+            fileContents =textBuilder.toString().getBytes();
+            System.out.println("file  " + fileContents.length);
+            
+
+        } catch (IOException e) {
+            // Show faces message?
+        }
+    }
+
+    public Part getUploadedFileAnnonce() {
+        return uploadedFileAnnonce;
+    }
+
+    public void setUploadedFileAnnonce(Part uploadedFileAnnonce) {
+        this.uploadedFileAnnonce = uploadedFileAnnonce;
+    }
+
 }

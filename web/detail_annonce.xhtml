@@ -206,7 +206,7 @@
                                     <div id="map" />
                                 </div>
                             </div>
-                            
+
 
                             <div class="card padding-card">
 
@@ -290,6 +290,11 @@
                                                             <h6 class="card-subtitle mb-3 text-muted"><i class="mdi mdi-phone" /> (+212) #{annonceController.annonceDetail.annonceur.telephone}</h6>
 
                                                             <h6 class="card-subtitle mb-3 text-muted"><i class="mdi mdi-email" /> #{annonceController.annonceDetail.annonceur.email}</h6>
+                                                            <h:form  enctype="multipart/form-data" >
+                                                                <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
+                                                                    <f:ajax listener="#{annonceController.upload}" />
+                                                                </h:inputFile>
+                                                            </h:form>
 
                                                         </div>
                                                     </a>
