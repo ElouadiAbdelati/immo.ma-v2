@@ -11,7 +11,13 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,6 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -43,6 +51,8 @@ import org.primefaces.model.UploadedFile;
 import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
+import java.util.UUID;
+import javax.imageio.ImageIO;
 
 @Named("annonceController")
 @SessionScoped
@@ -111,11 +121,6 @@ public class AnnonceController implements Serializable {
         current.setImagePath(url);
     }
 
-    public void showSelected() {
-        System.out.println("controller.AnnonceController.showSelected()");
-        System.out.println(current.toString());
-    }
-
     public Annonce getSelected() {
         if (current == null) {
             current = new Annonce();
@@ -158,22 +163,28 @@ public class AnnonceController implements Serializable {
         return "View";
     }
 
+    public String showSelected() {
+        System.out.println("controller.AnnonceController.showSelected()");
+        System.out.println(current.toString());
+        return "/liste_annonces?faces-redirect=true";
+    }
+
     public String prepareCreate() {
         current = new Annonce();
         selectedItemIndex = -1;
-        return "Create";
+        return "/liste_annonces?faces-redirect=true";
     }
 
     public String create() {
-        System.out.println("dkhl l create");
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceCreated"));
-            return prepareCreate();
+            current = new Annonce();
+            selectedItemIndex = -1;
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
         }
+        return "/liste_annonces?faces-redirect=true";
     }
 
     public String prepareEdit() {
@@ -490,33 +501,33 @@ public class AnnonceController implements Serializable {
     private Part uploadedFileAnnonce; // +getter+setter
     private String fileName;
     private byte[] fileContents;
-   
+
     public void upload() {
-        
-//        
-//        <h:form  enctype="multipart/form-data" >
-//                  <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
-//                         <f:ajax listener="#{annonceController.upload}" />
-//                   </h:inputFile>
-//       </h:form>
         fileName = Paths.get(uploadedFileAnnonce.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         System.out.println("fileName  " + fileName);
-
-        try (InputStream input = uploadedFileAnnonce.getInputStream()) {
-            StringBuilder textBuilder = new StringBuilder();
-            try (Reader reader = new BufferedReader(new InputStreamReader(input, Charset.forName(StandardCharsets.UTF_8.name())))) {
-                int c = 0;
-                while ((c = reader.read()) != -1) {
-                    textBuilder.append((char) c);
-                }
-            }
-            fileContents =textBuilder.toString().getBytes();
-            System.out.println("file  " + fileContents.length);
-            
-
-        } catch (IOException e) {
-            // Show faces message?
+        try {
+            InputStream inputStream = uploadedFileAnnonce.getInputStream();
+            Image image = ImageIO.read(inputStream);
+            BufferedImage bi = this.createResizedCopy(image, 360, 360, true);
+            String id = UUID.randomUUID().toString();
+            String url = "C:\\Users\\ok\\OneDrive\\Documents\\NetBeansProjects\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
+            ImageIO.write(bi, fileName.split("\\.")[1], new File(url));
+            current.setImagePath("/ressources/img/annonces/annonce" + id + "." + fileName.split("\\.")[1]);
+        } catch (IOException ex) {
+            Logger.getLogger(AnnonceController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight, boolean preserveAlpha) {
+        int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
+        Graphics2D g = scaledBI.createGraphics();
+        if (preserveAlpha) {
+            g.setComposite(AlphaComposite.Src);
+        }
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+        g.dispose();
+        return scaledBI;
     }
 
     public Part getUploadedFileAnnonce() {

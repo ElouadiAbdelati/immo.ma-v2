@@ -45,21 +45,20 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-8 mx-auto">
                         <p>#{annonceController.init()}</p>
-                        <h:form>
+                        <h:form enctype="multipart/form-data">
+                            <div class="card padding-card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Image</h5>
+                                    <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
+                                        <f:ajax listener="#{annonceController.upload}" />
+                                    </h:inputFile>
+                                </div>
+                            </div>
+                        </h:form>
+                        <h:form >
                             <div class="card padding-card">
                                 <div class="card-body">
                                     <h5 class="card-title mb-4">Property Description</h5>
-                                    <h:form enctype="multipart/form-data" style="width:500px">
-                                        <p:fileUpload value="#{annonceController.uploadedFile}"
-                                                      invalidSizeMessage="JournalDev: Invalid Size"
-                                                      invalidFileMessage="JournalDev: Invalid File Type"
-                                                      fileLimitMessage="JournalDev: Invalid File Limit" 
-                                                      mode="advanced" fileLimit="3" sizeLimit="204800"
-                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                                      fileUploadListener="#{annonceController.handleFileUpload(event)}">
-                                        </p:fileUpload>
-                                        <p:growl id="messages" showDetail="true"/>
-                                    </h:form>
                                     <div class="form-group">
                                         <label>Titre <span class="text-danger">*</span></label>
                                         <p:inputText
@@ -267,7 +266,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">                                        
-                                    <p:commandButton type="submit" actionListener="#{annonceController.create()}" value="enregistrer" />
+                                    <p:commandButton type="submit" action="#{annonceController.create()}" value="enregistrer" />
                                 </div>
                                 <div class="form-group col-md-6">                                        
                                     <p:commandButton type="submit" action="#{annonceController.showSelected()}" value="show" />
