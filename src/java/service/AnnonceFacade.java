@@ -6,7 +6,7 @@
 package service;
 
 import bean.Annonce;
-import bean.Annonce_;
+//import bean.Annonce_;
 import bean.AnnonceStatus;
 import bean.AnnonceType;
 import bean.Annonceur;
@@ -141,14 +141,14 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
         super(Annonce.class);
     }
 
-       public List<Annonce> findLastInserted(int[] range) {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(Annonce.class)).orderBy(getEntityManager().getCriteriaBuilder().desc(cq.from(Annonce.class).get(Annonce_.id)))
-                ;
-        javax.persistence.Query q = getEntityManager().createQuery(cq);
-        q.setMaxResults(range[1] - range[0] + 1);
-        q.setFirstResult(range[0]);
-        return q.getResultList();
-    }
+//       public List<Annonce> findLastInserted(int[] range) {
+//        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+//        cq.select(cq.from(Annonce.class)).orderBy(getEntityManager().getCriteriaBuilder().desc(cq.from(Annonce.class).get(Annonce_.id)))
+//                ;
+//        javax.persistence.Query q = getEntityManager().createQuery(cq);
+//        q.setMaxResults(range[1] - range[0] + 1);
+//        q.setFirstResult(range[0]);
+//        return q.getResultList();
+//    }
     
 }

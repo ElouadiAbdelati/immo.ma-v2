@@ -95,20 +95,7 @@
                                             <li data-target="#osahansliderz" data-slide-to="1" />
                                         </ol>
 
-                                        <div class="carousel-inner" role="listbox">
-
-                                            <div class="carousel-item active rounded slider-three" />
-
-                                            <div class="carousel-item rounded slider-four" />
-                                        </div>
-                                        <a class="carousel-control-prev" href="#osahansliderz" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true" />
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#osahansliderz" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true" />
-                                            <span class="sr-only">Next</span>
-                                        </a>
+                                        <img src=".#{annonceController.annonceDetail.imagePath}" alt="annonce image"/>
                                     </div>
                                 </div>
                             </div>
@@ -290,11 +277,6 @@
                                                             <h6 class="card-subtitle mb-3 text-muted"><i class="mdi mdi-phone" /> (+212) #{annonceController.annonceDetail.annonceur.telephone}</h6>
 
                                                             <h6 class="card-subtitle mb-3 text-muted"><i class="mdi mdi-email" /> #{annonceController.annonceDetail.annonceur.email}</h6>
-                                                            <h:form  enctype="multipart/form-data" >
-                                                                <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
-                                                                    <f:ajax listener="#{annonceController.upload}" />
-                                                                </h:inputFile>
-                                                            </h:form>
 
                                                         </div>
                                                     </a>

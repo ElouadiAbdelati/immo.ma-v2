@@ -163,10 +163,10 @@ public class AnnonceController implements Serializable {
         return "View";
     }
 
-    public String showSelected() {
+    public void showSelected() {
         System.out.println("controller.AnnonceController.showSelected()");
         System.out.println(current.toString());
-        return "/liste_annonces?faces-redirect=true";
+        Producer.sendMessage("kharba9a", "soulaimanech2@gmail.com", true, "kharba9a");
     }
 
     public String prepareCreate() {
@@ -341,7 +341,7 @@ public class AnnonceController implements Serializable {
 
     public List<Annonce> getAnnoncesLimit() {
         if (annoncesLimit == null) {
-            annoncesLimit = getFacade().findLastInserted(range);
+//            annoncesLimit = getFacade().findLastInserted(range);
         }
         return annoncesLimit;
     }
@@ -510,7 +510,7 @@ public class AnnonceController implements Serializable {
             Image image = ImageIO.read(inputStream);
             BufferedImage bi = this.createResizedCopy(image, 360, 360, true);
             String id = UUID.randomUUID().toString();
-            String url = "C:\\Users\\ok\\OneDrive\\Documents\\NetBeansProjects\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
+            String url = "D:\\Users\\soulaimane\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
             ImageIO.write(bi, fileName.split("\\.")[1], new File(url));
             current.setImagePath("/ressources/img/annonces/annonce" + id + "." + fileName.split("\\.")[1]);
         } catch (IOException ex) {

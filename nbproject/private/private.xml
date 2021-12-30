@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/service/AbstractFacade.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/create_annonce.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/controller/AnnonceurController.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/detail_annonce.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/service/AnnonceFacade.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/bean/Annonce.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/admin.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/template_admin.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/index.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/liste_annonces.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/jms/producer/Producer.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/jms/consumer/Consumer.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/web/template.xhtml</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/controller/AnnonceController.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/service/AuthUser.java</file>
-            <file>file:/C:/Users/ok/OneDrive/Documents/NetBeansProjects/immo.ma-v2/src/java/controller/util/JsfUtil.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

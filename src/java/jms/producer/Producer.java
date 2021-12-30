@@ -5,6 +5,11 @@
  */
 package jms.producer;
 
+import bean.helper.JmsMessage;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.jms.Connection;
@@ -22,24 +27,29 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  *
  * @author ok
  */
-public abstract  class Producer {
-    private Producer(){
+public abstract class Producer {
+
+    private Producer() {
         
     }
-    public static void sendMessage(String message) {
+
+    public static void sendMessage(String referenceAnnonce, String annonceurEmail, boolean status, String message) {
         try {
-            ConnectionFactory connectionFactory =new ActiveMQConnectionFactory(
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
                     "tcp://localhost:61616"
             );
-            
-            Connection connection  =connectionFactory.createConnection();
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+            Gson gson = builder.create();
+            Connection connection = connectionFactory.createConnection();
             connection.start();
-            Session session =connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue("immo.queue");
             MessageProducer producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-            TextMessage textMessage =session.createTextMessage();
-            textMessage.setText(message);
+            TextMessage textMessage = session.createTextMessage();
+            JmsMessage jmsMessage = new JmsMessage(annonceurEmail, referenceAnnonce, status, message);
+            textMessage.setText(gson.toJson(jmsMessage));
             producer.send(textMessage);
             session.close();
         } catch (JMSException ex) {
