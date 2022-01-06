@@ -27,6 +27,8 @@ public class AuthUser {
 
     public void setCurUser(Annonceur curUser) {
         this.curUser = curUser;
+        System.out.println("sadsdsadsdasdasdsa");
+        System.out.println(curUser.toString());
     }
 
 }

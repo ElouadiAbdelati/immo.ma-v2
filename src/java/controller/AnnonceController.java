@@ -54,6 +54,7 @@ import service.CategoryFacade;
 import service.CityFacade;
 import java.util.UUID;
 import javax.imageio.ImageIO;
+import service.AuthUser;
 
 @Named("annonceController")
 @SessionScoped
@@ -92,6 +93,21 @@ public class AnnonceController implements Serializable {
     private AnnonceTypeFacade annonceTypeFacade;
     @EJB
     private CityFacade cityFacade;
+    
+   
+     
+    @EJB
+    private AuthUser authUser;
+    
+
+    public AuthUser getAuthUser() {
+        return authUser;
+    }
+
+    public void setAuthUser(AuthUser authUser) {
+        this.authUser = authUser;
+    }
+
 
     private PaginationHelper pagination;
 
@@ -112,6 +128,8 @@ public class AnnonceController implements Serializable {
         current = new Annonce();
         current.setActive(true);
         current.setStatus(AnnonceStatus.EN_COURS);
+        System.out.println(getAuthUser().getCurUser());
+        current.setAnnonceur(getAuthUser().getCurUser());
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {

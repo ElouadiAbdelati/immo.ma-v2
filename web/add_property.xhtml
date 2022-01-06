@@ -1,0 +1,249 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./template_user.xhtml">
+        <ui:define name="add_property">
+            <!--  Add Property -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 mx-auto">
+                        <p>#{annonceController.init()}</p>
+                        <h:form enctype="multipart/form-data">
+                            <div class="card padding-card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Image</h5>
+                                    <h:inputFile value="#{annonceController.uploadedFileAnnonce}">
+                                        <f:ajax listener="#{annonceController.upload}" />
+                                    </h:inputFile>
+                                </div>
+                            </div>
+                        </h:form>
+                        <h:form >
+                            <div class="card padding-card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Property Description</h5>
+                                    <div class="form-group">
+                                        <label>Titre <span class="text-danger">*</span></label>
+                                        <p:inputText
+                                            id="title"
+                                            value="#{annonceController.current.title}"
+                                            type="text"
+                                            class="form-control"
+                                            />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Reference <span class="text-danger">*</span></label>
+                                        <p:inputText
+                                            id="reference"
+                                            value="#{annonceController.current.reference}"
+                                            type="text"
+                                            class="form-control"
+                                            />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description <span class="text-danger">*</span></label>
+                                        <p:inputTextarea
+                                            id="description"
+                                            value="#{annonceController.current.description}"
+                                            class="form-control"
+                                            />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Adresse <span class="text-danger">*</span></label>
+                                        <p:inputText
+                                            id="address"
+                                            value="#{annonceController.current.address}"
+                                            class="form-control"
+                                            />
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Category <span class="text-danger">*</span></label>
+                                            <h:selectOneListbox
+                                                id="category"
+                                                size="1"
+                                                value="#{annonceController.current.category}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItems
+                                                    value="#{categoryController.itemsAvailableSelectOne}"
+                                                    var="category"
+                                                    itemValue="#{category}"
+                                                    />
+                                            </h:selectOneListbox> 
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Type </label>
+                                            <h:selectOneListbox
+                                                id="type"
+                                                size="1"
+                                                value="#{annonceController.current.annonceType}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItems
+                                                    value="#{annonceTypeController.itemsAvailableSelectOne}"
+                                                    var="annonceType"
+                                                    itemValue="#{annonceType}"
+                                                    />
+                                            </h:selectOneListbox> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Nombre des pieces <span class="text-danger">*</span></label>
+                                            <p:inputText
+                                                id="pieces"
+                                                value="#{annonceController.current.pieces}"
+                                                title="#{bundle.CreateAnnonceTitle_pieces}"
+                                                type="number"
+                                                class="form-control"
+                                                />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Avec piscine</label>
+                                            <h:selectOneListbox
+                                                id="piscine"
+                                                size="1"
+                                                value="#{annonceController.current.piscine}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItems
+                                                    value="#{annonceController.picineSelectValues}"
+                                                    var="picineValue"
+                                                    itemValue="#{picineValue}"
+                                                    />
+                                            </h:selectOneListbox>    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                Ville - Secteur
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <h:selectOneListbox
+                                                id="secteur"
+                                                size="1"
+                                                value="#{annonceController.current.secteur}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItems
+                                                    value="#{secteurController.itemsAvailableSelectOne}"
+                                                    var="secteurItem"
+                                                    itemValue="#{secteurItem}"
+                                                    />
+                                            </h:selectOneListbox>    
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Surface <span class="text-danger">*</span></label>
+                                            <p:inputText
+                                                id="surface"
+                                                value="#{annonceController.current.surface}"
+                                                title="#{bundle.CreateAnnonceTitle_surface}"
+                                                type="number"
+                                                class="form-control"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Prix <span class="text-danger">*</span></label>
+                                            <p:inputText
+                                                id="price"
+                                                value="#{annonceController.current.prix}"
+                                                title="#{bundle.CreateAnnonceTitle_prix}"
+                                                type="number"
+                                                class="form-control"
+                                                />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Devise</label>
+                                            <p:inputText
+                                                id="currency"
+                                                value="#{annonceController.current.devise}"
+                                                title="#{bundle.CreateAnnonceTitle_devise}"
+                                                class="form-control"
+                                                type="text"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Latitude <span class="text-danger">*</span></label>
+                                            <p:inputText
+                                                id="latitude"
+                                                value="#{annonceController.current.latitude}"
+                                                title="#{bundle.CreateAnnonceTitle_latitude}"
+                                                class="form-control"
+                                                type="number"
+                                                />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Longitude </label>
+                                            <p:inputText
+                                                id="longitude"
+                                                value="#{annonceController.current.longitude}"
+                                                title="#{bundle.CreateAnnonceTitle_longitude}"
+                                                class="form-control"
+                                                type="number"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label
+                                                >Departement <span class="text-danger">*</span></label
+                                            >
+                                            <p:inputText
+                                                id="department"
+                                                value="#{annonceController.current.department}"
+                                                title="#{bundle.CreateAnnonceTitle_department}"
+                                                class="form-control"
+                                                type="text"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Nombre des chambre <span class="text-danger">*</span></label>
+                                            <p:inputText
+                                                id="chamber"
+                                                value="#{annonceController.current.chamber}"
+                                                title="#{bundle.CreateAnnonceTitle_chamber}"
+                                                class="form-control"
+                                                type="number"
+                                                />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Nombre des toilets </label>
+                                            <p:inputText
+                                                id="surfaceLand"
+                                                value="#{annonceController.current.toilet}"
+                                                title="#{bundle.CreateAnnonceTitle_toilet}"
+                                                class="form-control"
+                                                type="number"
+                                                />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">                                        
+                                    <p:commandButton type="submit" action="#{annonceController.create()}" value="enregistrer" />
+                                </div>
+                                <div class="form-group col-md-6">                                        
+                                    <p:commandButton type="submit" action="#{annonceController.showSelected()}" value="show" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <!--            <script src="ressources/js/all.js" type="text/javascript"></script>
+                        <script src="ressources/js/cloudinary.js" type="text/javascript"></script>-->
+        </ui:define>
+    </ui:composition>
+</html>

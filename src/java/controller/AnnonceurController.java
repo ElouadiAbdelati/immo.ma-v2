@@ -51,7 +51,7 @@ public class AnnonceurController implements Serializable {
 
         int res = ejbFacade.seConnecter(getSelected().getEmail(), getSelected().getPassword());
         if (res > 0) {
-            authUser.signIn(current);
+            authUser.signIn(getCurrent());
             return "/index?faces-redirect=true";
         } else if (res == -1) {
             JsfUtil.addErrorMessage("Login innexistant");
@@ -63,12 +63,12 @@ public class AnnonceurController implements Serializable {
     }
 
     public String signUp() {
-        System.out.println("com.immo.controller.UserController.signUp()" + getSelected().getEmail());
+        System.out.println("com.immo.controller.UserController.signUp()" + getCurrent().getEmail());
         System.out.println("com.fst.controler.UserController.signUp()");
-        int res = ejbFacade.seEnregister(getSelected());
+        int res = ejbFacade.seEnregister(getCurrent());
         System.out.println("com.fst.controler.UserController.signUp() : " + res);
         if (res > 0) {
-            authUser.signIn(current);
+            authUser.setCurUser(getCurrent());
             return "/index?faces-redirect=true";
         } else if (res == -1) {
             JsfUtil.addErrorMessage("User not registred");
@@ -284,5 +284,15 @@ public class AnnonceurController implements Serializable {
         }
 
     }
+
+    public Annonceur getCurrent() {
+        if (current == null) {
+            return new Annonceur();
+        }
+        return current;
+    }
+
+   
+    
 
 }

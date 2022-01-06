@@ -56,7 +56,7 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
 
         }
         if (!whereAdded) {
-            query += "WHERE 1=1 ";
+            query += "WHERE active=1 and 1=1 ";
         }
 
         if (nbrchambresSearch > 0) {
@@ -93,31 +93,33 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
             annonce.setId((Long) line[0]);
             annonce.setActive((Boolean) line[1]);
             annonce.setAddress((String) line[2]);
-            annonce.setChamber((Integer) line[3]);
-            annonce.setDepartment((String) line[4]);
-            annonce.setDescription((String) line[5]);
-            annonce.setDevise((String) line[6]);
-            annonce.setLatitude((String) line[7]);
-            annonce.setLongitude((String) line[8]);
-            annonce.setPieces((Integer) line[9]);
-            annonce.setPiscine((Boolean) line[10]);
-            annonce.setPrix((BigDecimal) line[11]);
-            annonce.setReference((String) line[12]);
-            annonce.setStatus((AnnonceStatus) line[13]);
-            annonce.setSurface((Double) line[14]);
-            annonce.setTitle((String) line[15]);
-            annonce.setToilet((Integer) line[16]);
+            annonce.setAnnonceStatus((String) line[3]);
+            annonce.setChamber((Integer) line[4]);
+            annonce.setDepartment((String) line[5]);
+            annonce.setDescription((String) line[6]);
+            annonce.setDevise((String) line[7]);
+            annonce.setImagePath((String) line[8]);
+            annonce.setLatitude((String) line[9]);
+            annonce.setLongitude((String) line[10]);
+            annonce.setPieces((Integer) line[11]);
+            annonce.setPiscine((Boolean) line[12]);
+            annonce.setPrix((BigDecimal) line[13]);
+            annonce.setReference((String) line[14]);
+          
+            annonce.setSurface((Double) line[16]);
+            annonce.setTitle((String) line[17]);
+            annonce.setToilet((Integer) line[18]);
 
-            AnnonceType annonceType1 =  getEntityManager().find(AnnonceType.class,(Long) line[17]);
+            AnnonceType annonceType1 =  getEntityManager().find(AnnonceType.class,(Long) line[19]);
             annonce.setAnnonceType(annonceType1);
 
-            Category category = getEntityManager().find(Category.class,(Long) line[18]);
+            Category category = getEntityManager().find(Category.class,(Long) line[20]);
             annonce.setCategory(category);
 
-            Secteur secteur = getEntityManager().find(Secteur.class,(Long) line[19]);
+            Secteur secteur = getEntityManager().find(Secteur.class,(Long) line[21]);
             annonce.setSecteur(secteur);
 
-            Annonceur annonceur = getEntityManager().find(Annonceur.class,(Long) line[20]);
+            Annonceur annonceur = getEntityManager().find(Annonceur.class,(Long) line[22]);
             annonce.setAnnonceur(annonceur);
 
             list.add(annonce);

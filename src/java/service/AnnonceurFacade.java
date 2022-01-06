@@ -41,6 +41,7 @@ public class AnnonceurFacade extends AbstractFacade<Annonceur> {
     }
 
     public int seEnregister(Annonceur annonceur) {
+        System.out.println(annonceur.toString());
         create(annonceur);
         Annonceur loadedAnnonceur = findBylogin(annonceur.getEmail());
         if (loadedAnnonceur == null) {

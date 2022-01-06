@@ -112,7 +112,9 @@ public class Annonceur implements Serializable {
 
     @Override
     public String toString() {
-        return "Annonceur{" + "email=" + email + '}';
+        return "Annonceur{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", telephone=" + telephone + ", email=" + email + ", password=" + password + ", address=" + address + ", city=" + city + ", annonces=" + annonces + '}';
     }
+
+    
 
 }
