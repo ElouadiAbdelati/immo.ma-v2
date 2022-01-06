@@ -44,15 +44,15 @@ public class EmailUtils {
             code = (int) x;
 
             String content = "<div>\n"
-                    + "        <div style=\"margin: auto; justify-content: center; text-align: center; width: 40%; height: auto; background-color:  #05071F; padding: 20px 30px;\">\n"
+                    + "        <div style=\"margin: auto; justify-content: center; text-align: center; width: 40%; height: auto; background-color:  #eceff1; padding: 20px 30px;\">\n"
                     + "            <div style=\"font-size: 25px;\">\n"
-                    + "                <h2 style=\"color: #9b59b6;\">IMMO<span style=\"color: #6770bf;\">.ma</span></h2>\n"
+                    + "                <h2 style=\"color: #ff5722;\">IMMO<span style=\"color: #304ffe;\">.ma</span></h2>\n"
                     + "            </div>\n"
                     + "            <div style=\"padding: 0 0 5px 0;\">\n"
-                    + "                <p style=\"font-size: 20px; color: #cccccc; flex-wrap: wrap;\">" + body + "</p>\n"
+                    + "                <p style=\"font-size: 20px; color: #000000; flex-wrap: wrap;\">" + body + "</p>\n"
                     + "            </div>\n"
                     + "            <div style=\"padding: 0 0 3px 0;\">\n"
-                    + "                <p style=\"font-size: 20px; color: #cccccc; flex-wrap: wrap; font-weight: bold;\">Merci pour votre confience.</p>\n"
+                    + "                <p style=\"font-size: 20px; color: #000000; flex-wrap: wrap; font-weight: bold;\">Merci pour votre confience.</p>\n"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </div>";

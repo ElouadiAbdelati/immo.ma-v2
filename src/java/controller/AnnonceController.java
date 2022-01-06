@@ -31,6 +31,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,6 +100,10 @@ public class AnnonceController implements Serializable {
     private List<Boolean> picineSelectValues = Arrays.asList(true, false);
     private UploadedFile uploadedFile;
 
+    private List<Annonce> annoncesEnCours = null;
+    private List<Annonce> annoncesApproved = null;
+    private List<Annonce> annoncesRejected = null;
+
     public AnnonceController() {
     }
 
@@ -166,7 +171,6 @@ public class AnnonceController implements Serializable {
     public void showSelected() {
         System.out.println("controller.AnnonceController.showSelected()");
         System.out.println(current.toString());
-        Producer.sendMessage("kharba9a", "soulaimanech2@gmail.com", true, "kharba9a");
     }
 
     public String prepareCreate() {
@@ -177,6 +181,7 @@ public class AnnonceController implements Serializable {
 
     public String create() {
         try {
+            current.setAnnonceStatus(current.getStatus().toString());
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceCreated"));
             current = new Annonce();
@@ -530,12 +535,65 @@ public class AnnonceController implements Serializable {
         return scaledBI;
     }
 
+    public List<Annonce> getAnnoncesByStatus(AnnonceStatus value) {
+        return ejbFacade.findAllBy("annonceStatus", value.toString());
+    }
+
+    public String sendMessage(boolean approved, String email, String reference) {
+        Producer.sendMessage(reference, email, approved, "kharba9a");
+        if (approved) {
+            Annonce annonceToEdit = ejbFacade.findBy("reference", reference);
+            annonceToEdit.setStatus(AnnonceStatus.APPROVE);
+            annonceToEdit.setAnnonceStatus(annonceToEdit.getStatus().toString());
+            ejbFacade.edit(annonceToEdit);
+        } else {
+            Annonce annonceToEdit = ejbFacade.findBy("reference", reference);
+            annonceToEdit.setStatus(AnnonceStatus.REFUSE);
+            annonceToEdit.setAnnonceStatus(annonceToEdit.getStatus().toString());
+            ejbFacade.edit(annonceToEdit);
+        }
+        return "/admin?faces-redirect=true";
+    }
+
     public Part getUploadedFileAnnonce() {
         return uploadedFileAnnonce;
     }
 
     public void setUploadedFileAnnonce(Part uploadedFileAnnonce) {
         this.uploadedFileAnnonce = uploadedFileAnnonce;
+    }
+
+    public List<Annonce> getAnnoncesEnCours() {
+        if (annoncesEnCours == null) {
+            return getAnnoncesByStatus(AnnonceStatus.EN_COURS);
+        }
+        return annoncesEnCours;
+    }
+
+    public void setAnnoncesEnCours(List<Annonce> annoncesEnCours) {
+        this.annoncesEnCours = annoncesEnCours;
+    }
+
+    public List<Annonce> getAnnoncesApproved() {
+        if (annoncesApproved == null) {
+            return getAnnoncesByStatus(AnnonceStatus.APPROVE);
+        }
+        return annoncesApproved;
+    }
+
+    public void setAnnoncesApproved(List<Annonce> annoncesApproved) {
+        this.annoncesApproved = annoncesApproved;
+    }
+
+    public List<Annonce> getAnnoncesRejected() {
+        if (annoncesRejected == null) {
+            return getAnnoncesByStatus(AnnonceStatus.REFUSE);
+        }
+        return annoncesRejected;
+    }
+
+    public void setAnnoncesRejected(List<Annonce> annoncesRejected) {
+        this.annoncesRejected = annoncesRejected;
     }
 
 }

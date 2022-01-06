@@ -3,17 +3,63 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
       >
     <ui:composition template="/template_admin.xhtml">
         <ui:define name="body">
-             <p:dialog id="consumerDialogID" widgetVar="consumerDialogVar">
+            <p:dialog id="consumerDialogID" widgetVar="consumerDialogVar">
                 <p>new annonce ceated please check it !</p>
             </p:dialog>
             <div style="margin-left: 10px">
-                   <h1>Test</h1>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="table-responsive pt-3">
+                                <table class="table table-striped project-orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="ml-5">REFERENCE</th>
+                                            <th>Adresse</th>
+                                            <th>Category</th>
+                                            <th>Type</th>
+                                            <th>Annonceur email</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="#{annonceController.annoncesEnCours}" var="annonce" varStatus="metadata">
+                                            <tr>
+                                                <td>
+                                                    <h:link outcome="faces/detail_annonce.xhtml" >
+                                                        <f:param name="annonceId" value="#{annonce.id}"/>
+                                                        #{annonce.reference}
+                                                    </h:link>
+                                                </td>
+                                                <td>#{annonce.address}</td>
+                                                <td>#{annonce.category}</td>
+                                                <td>#{annonce.annonceType.type}</td>
+                                                <td>#{annonce.annonceur.email}</td>
+                                                <td>
+                                                    <h:form>
+                                                        <div class="d-flex align-items-center">
+                                                            <p:commandButton type="submit" value="Accepter" class="btn btn-success btn-sm btn-icon-text mr-3"  action="#{annonceController.sendMessage(true, annonce.annonceur.email, annonce.reference)}" />
+                                                            <p:commandButton type="submit" value="Refuser" class="btn btn-danger btn-sm btn-icon-text" action="#{annonceController.sendMessage(false, annonce.annonceur.email, annonce.reference)}" />
+                                                        </div>
+                                                    </h:form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-         
+
         </ui:define>
-        
-            </ui:composition>
+
+    </ui:composition>
 </html>

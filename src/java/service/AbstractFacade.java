@@ -5,6 +5,7 @@
  */
 package service;
 
+import bean.AnnonceStatus;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -41,13 +42,19 @@ public abstract class AbstractFacade<T> {
         query += addCriteria(key, valueMax, "<=");
         return query;
     }
-     public T findBy(String criteria, String value) {
+
+    public T findBy(String criteria, String value) {
         final String query = "SELECT item FROM " + entityClass.getSimpleName() + " item WHERE item." + criteria + " = '" + value + "'";
         System.out.println("query = " + query);
         return getSingle(query);
     }
-     
-     
+
+    public List<T> findAllBy(String criteria, String value) {
+        final String query = "SELECT item FROM " + entityClass.getSimpleName() + " item WHERE item." + criteria + " = '" + value + "'";
+        System.out.println("query = " + query);
+        return getAll(query);
+    }
+
     private T getSingle(String query) {
         List<T> list = getEntityManager().createQuery(query).getResultList();
         if (list == null || list.isEmpty()) {
@@ -57,12 +64,22 @@ public abstract class AbstractFacade<T> {
         }
     }
     
+
+    private List<T> getAll(String query) {
+        List<T> list = getEntityManager().createQuery(query).getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
+    }
+
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     protected abstract EntityManager getEntityManager();
-  
+
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
@@ -101,5 +118,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

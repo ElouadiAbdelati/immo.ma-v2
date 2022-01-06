@@ -44,6 +44,7 @@ public class Annonce implements Serializable {
     private String department; 
     private int toilet;   
     private AnnonceStatus status;
+    private String annonceStatus;
 
     @OneToOne()
     private Annonceur annonceur;
@@ -234,6 +235,16 @@ public class Annonce implements Serializable {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public String getAnnonceStatus() {
+        return annonceStatus;
+    }
+
+    public void setAnnonceStatus(String annonceStatus) {
+        this.annonceStatus = annonceStatus;
+    }
+    
+    
 
     @Override
     public String toString() {

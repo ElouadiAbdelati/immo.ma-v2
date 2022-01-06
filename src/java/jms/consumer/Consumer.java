@@ -50,11 +50,12 @@ public class Consumer {
                             System.out.println(jmsMessage.toString());
                             String body = "";
                             if (jmsMessage.getStatus()) {
-                                body = "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " a été accepté avec succeé.";
+                                body += "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " a été accepté avec succeé. <br/>";
                             } else  {
-                                body = "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " n'a pas été accepté. \n\n";
-                                body += "Remarques : \n" + message;
+                                body = "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " n'a pas été accepté. <br/>";
+                                body += "<br/> Pour plus d'information, vous pouvez nous contacter.";
                             }
+                            body += "<br/> Email : <a href='http://localhost:8080/immo.ma-v2/'> immo.ma.suport@gmail.com </a>";
                             EmailUtils.sendMail(jmsMessage.getAnnonceurEmail(), "Resultat de la demande de validation de l'annonce " + jmsMessage.getReferenceAnnonce(), body);
                         } catch (JMSException ex) {
                             Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
