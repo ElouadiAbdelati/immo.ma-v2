@@ -16,23 +16,15 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import service.AnnonceFacade;
-
 import java.io.Serializable;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,10 +46,7 @@ import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
 import java.util.UUID;
-import javax.ejb.Local;
-import javax.ejb.LocalBean;
 import javax.imageio.ImageIO;
-import javax.naming.InitialContext;
 import service.AnnonceurFacade;
 import service.AuthUser;
 
@@ -67,6 +56,8 @@ public class AnnonceController implements Serializable {
 
     private Annonce current;
     private Annonce annonceDetail;
+    private Annonce editAnnonce;
+    private Long editAnnonceId;
     private Long annonceDetailId;
 
     private DataModel items = null;
@@ -89,6 +80,8 @@ public class AnnonceController implements Serializable {
     private int tailleMaxSearch;
     private int nbrThermesSearch;
 
+    private List<Annonce> userAnnonces = null;
+
     @EJB
     private service.AnnonceFacade ejbFacade;
 
@@ -104,12 +97,6 @@ public class AnnonceController implements Serializable {
     private AuthUser authUser;
 
     public AuthUser getAuthUser() {
-//        try {
-//            InitialContext ctx = new InitialContext();
-//            authUser = (AuthUser) ctx.lookup("java:comp/env/AuthUser");
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
         return authUser;
     }
 
@@ -208,7 +195,7 @@ public class AnnonceController implements Serializable {
         try {
             current.setAnnonceStatus(current.getStatus().toString());
             Annonceur annonceur = annonceurFacade.findBylogin(getAuthUser().getCurUser().getEmail());
-             System.out.println("annonceur create " + annonceur.toString());
+            System.out.println("annonceur create " + annonceur.toString());
             current.setAnnonceur(annonceur);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceCreated"));
@@ -218,6 +205,17 @@ public class AnnonceController implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
         return "/liste_annonces?faces-redirect=true";
+    }
+
+    public String edit() {
+        try {
+            getFacade().edit(editAnnonce);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceUpdated"));
+            editAnnonce = new Annonce();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+        }
+        return "/my_properties?faces-redirect=true";
     }
 
     public String prepareEdit() {
@@ -373,7 +371,7 @@ public class AnnonceController implements Serializable {
 
     public List<Annonce> getAnnoncesLimit() {
         if (annoncesLimit == null) {
-          annoncesLimit = getFacade().findLastInserted(range);
+            annoncesLimit = getFacade().findLastInserted(range);
         }
         return annoncesLimit;
     }
@@ -491,6 +489,15 @@ public class AnnonceController implements Serializable {
         return "";
     }
 
+    public String loadeditAnnonce() {
+        editAnnonce = getFacade()
+                .find(editAnnonceId);
+        if (editAnnonce == null) {
+            return "/index?faces-redirect=true";
+        }
+        return "";
+    }
+
     public UploadedFile getUploadedFile() {
         return uploadedFile;
     }
@@ -528,6 +535,21 @@ public class AnnonceController implements Serializable {
 
     public void setAnnonceDetailId(Long annonceDetailId) {
         this.annonceDetailId = annonceDetailId;
+    }
+
+    public Annonce getEditAnnonce() {
+        if (editAnnonce == null) {
+            return new Annonce();
+        }
+        return editAnnonce;
+    }
+
+    public Long getEditAnnonceId() {
+        return editAnnonceId;
+    }
+
+    public void setEditAnnonceId(Long editAnnonceId) {
+        this.editAnnonceId = editAnnonceId;
     }
 
     private Part uploadedFileAnnonce; // +getter+setter
@@ -623,4 +645,18 @@ public class AnnonceController implements Serializable {
         this.annoncesRejected = annoncesRejected;
     }
 
+    public List<Annonce> getUserAnnonces() {
+        if (userAnnonces == null) {
+            return getUserAnnoncesFromDB();
+        }
+        return userAnnonces;
+    }
+
+    public List<Annonce> getUserAnnoncesFromDB() {
+        Annonceur annonceur = annonceurFacade
+                .findBylogin(getAuthUser()
+                        .getCurUser()
+                        .getEmail());
+        return ejbFacade.findAllBy("annonceur.id", annonceur.getId().toString());
+    }
 }

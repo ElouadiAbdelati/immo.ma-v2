@@ -1,5 +1,6 @@
 package controller;
 
+import bean.Annonce;
 import bean.Annonceur;
 import controller.util.JsfUtil;
 import controller.util.PaginationHelper;
@@ -29,11 +30,9 @@ public class AnnonceurController implements Serializable {
     private service.AnnonceurFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-   
-     
+    private  Annonceur connctedUser = null;
     @EJB
     private AuthUser authUser;
-    
 
     public AuthUser getAuthUser() {
         return authUser;
@@ -48,7 +47,7 @@ public class AnnonceurController implements Serializable {
     }
 
     public String signIn() {
-        System.out.println("signIn "+ getCurrent().toString());
+        System.out.println("signIn " + getCurrent().toString());
         int res = ejbFacade.seConnecter(getCurrent().getEmail(), getCurrent().getPassword());
         if (res > 0) {
             authUser.signIn(getCurrent());
@@ -60,6 +59,18 @@ public class AnnonceurController implements Serializable {
         }
         current = new Annonceur();
         return null;
+    }
+
+    public Annonceur getConnctedUser() {
+
+        if (connctedUser == null) {
+            connctedUser = ejbFacade.findBylogin(getAuthUser()
+                    .getCurUser()
+                    .getEmail());
+            return  connctedUser;
+        }
+
+        return connctedUser;
     }
 
     public String signUp() {
@@ -82,6 +93,7 @@ public class AnnonceurController implements Serializable {
         return "/index?faces-redirect=true";
 
     }
+
     public AnnonceurController() {
     }
 
@@ -243,6 +255,7 @@ public class AnnonceurController implements Serializable {
 
     public Annonceur getAnnonceur(java.lang.Long id) {
         return ejbFacade.find(id);
+
     }
 
     @FacesConverter(forClass = Annonceur.class)
@@ -284,17 +297,22 @@ public class AnnonceurController implements Serializable {
         }
 
     }
-
+   
+    public String edit(){
+        System.out.println("edit annonceur " + connctedUser.toString());
+        try {
+            getFacade().edit(connctedUser);
+        } catch (Exception e) {
+        }
+        return "/my_properties?faces-redirect=true";
+    }
     public Annonceur getCurrent() {
         if (current == null) {
             System.out.println(" new Annonceur()");
-            current =new Annonceur();
+            current = new Annonceur();
             return current;
         }
         return current;
     }
-
-   
-    
 
 }

@@ -11,6 +11,10 @@
     <ui:composition template="./template.xhtml">
 
         <ui:define name="body">
+            <f:metadata>
+                <f:viewParam name="editAnnonceId" value="#{annonceController.editAnnonceId}"/>
+                <f:viewAction action="#{annonceController.loadeditAnnonce()}" />
+            </f:metadata>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -59,11 +63,12 @@
                             <div class="card padding-card">
                                 <div class="card-body">
                                     <h5 class="card-title mb-4">Property Description</h5>
+
                                     <div class="form-group">
                                         <label>Titre <span class="text-danger">*</span></label>
                                         <p:inputText
                                             id="title"
-                                            value="#{annonceController.current.title}"
+                                            value="#{annonceController.editAnnonce.title}"
                                             type="text"
                                             class="form-control"
                                             />
@@ -72,7 +77,7 @@
                                         <label>Reference <span class="text-danger">*</span></label>
                                         <p:inputText
                                             id="reference"
-                                            value="#{annonceController.current.reference}"
+                                            value="#{annonceController.editAnnonce.reference}"
                                             type="text"
                                             class="form-control"
                                             />
@@ -81,7 +86,7 @@
                                         <label>Description <span class="text-danger">*</span></label>
                                         <p:inputTextarea
                                             id="description"
-                                            value="#{annonceController.current.description}"
+                                            value="#{annonceController.editAnnonce.description}"
                                             class="form-control"
                                             />
                                     </div>
@@ -89,7 +94,7 @@
                                         <label>Adresse <span class="text-danger">*</span></label>
                                         <p:inputText
                                             id="address"
-                                            value="#{annonceController.current.address}"
+                                            value="#{annonceController.editAnnonce.address}"
                                             class="form-control"
                                             />
                                     </div>
@@ -99,7 +104,7 @@
                                             <h:selectOneListbox
                                                 id="category"
                                                 size="1"
-                                                value="#{annonceController.current.category}"
+                                                value="#{annonceController.editAnnonce.category}"
                                                 class="form-control"
                                                 >
                                                 <f:selectItems
@@ -114,7 +119,7 @@
                                             <h:selectOneListbox
                                                 id="type"
                                                 size="1"
-                                                value="#{annonceController.current.annonceType}"
+                                                value="#{annonceController.editAnnonce.annonceType}"
                                                 class="form-control"
                                                 >
                                                 <f:selectItems
@@ -130,7 +135,7 @@
                                             <label>Nombre des pieces <span class="text-danger">*</span></label>
                                             <p:inputText
                                                 id="pieces"
-                                                value="#{annonceController.current.pieces}"
+                                                value="#{annonceController.editAnnonce.pieces}"
                                                 title="#{bundle.CreateAnnonceTitle_pieces}"
                                                 type="number"
                                                 class="form-control"
@@ -141,7 +146,7 @@
                                             <h:selectOneListbox
                                                 id="piscine"
                                                 size="1"
-                                                value="#{annonceController.current.piscine}"
+                                                value="#{annonceController.editAnnonce.piscine}"
                                                 class="form-control"
                                                 >
                                                 <f:selectItems
@@ -161,7 +166,7 @@
                                             <h:selectOneListbox
                                                 id="secteur"
                                                 size="1"
-                                                value="#{annonceController.current.secteur}"
+                                                value="#{annonceController.editAnnonce.secteur}"
                                                 class="form-control"
                                                 >
                                                 <f:selectItems
@@ -175,7 +180,7 @@
                                             <label>Surface <span class="text-danger">*</span></label>
                                             <p:inputText
                                                 id="surface"
-                                                value="#{annonceController.current.surface}"
+                                                value="#{annonceController.editAnnonce.surface}"
                                                 title="#{bundle.CreateAnnonceTitle_surface}"
                                                 type="number"
                                                 class="form-control"
@@ -187,7 +192,7 @@
                                             <label>Prix <span class="text-danger">*</span></label>
                                             <p:inputText
                                                 id="price"
-                                                value="#{annonceController.current.prix}"
+                                                value="#{annonceController.editAnnonce.prix}"
                                                 title="#{bundle.CreateAnnonceTitle_prix}"
                                                 type="number"
                                                 class="form-control"
@@ -197,7 +202,7 @@
                                             <label>Devise</label>
                                             <p:inputText
                                                 id="currency"
-                                                value="#{annonceController.current.devise}"
+                                                value="#{annonceController.editAnnonce.devise}"
                                                 title="#{bundle.CreateAnnonceTitle_devise}"
                                                 class="form-control"
                                                 type="text"
@@ -209,7 +214,7 @@
                                             <label>Latitude <span class="text-danger">*</span></label>
                                             <p:inputText
                                                 id="latitude"
-                                                value="#{annonceController.current.latitude}"
+                                                value="#{annonceController.editAnnonce.latitude}"
                                                 title="#{bundle.CreateAnnonceTitle_latitude}"
                                                 class="form-control"
                                                 type="number"
@@ -219,7 +224,7 @@
                                             <label>Longitude </label>
                                             <p:inputText
                                                 id="longitude"
-                                                value="#{annonceController.current.longitude}"
+                                                value="#{annonceController.editAnnonce.longitude}"
                                                 title="#{bundle.CreateAnnonceTitle_longitude}"
                                                 class="form-control"
                                                 type="number"
@@ -233,19 +238,35 @@
                                             >
                                             <p:inputText
                                                 id="department"
-                                                value="#{annonceController.current.department}"
+                                                value="#{annonceController.editAnnonce.department}"
                                                 title="#{bundle.CreateAnnonceTitle_department}"
-                                                class="form-control"
+                                                class="form-caontrol"
                                                 type="text"
                                                 />
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Active</label>
+                                            <h:selectOneListbox
+                                                id="active"
+                                                size="1"
+                                                value="#{annonceController.editAnnonce.active}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItems
+                                                    value="#{annonceController.picineSelectValues}"
+                                                    var="picineValue"
+                                                    itemValue="#{picineValue}"
+                                                    />
+                                            </h:selectOneListbox>    
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label>Nombre des chambre <span class="text-danger">*</span></label>
                                             <p:inputText
                                                 id="chamber"
-                                                value="#{annonceController.current.chamber}"
+                                                value="#{annonceController.editAnnonce.chamber}"
                                                 title="#{bundle.CreateAnnonceTitle_chamber}"
                                                 class="form-control"
                                                 type="number"
@@ -255,7 +276,7 @@
                                             <label>Nombre des toilets </label>
                                             <p:inputText
                                                 id="surfaceLand"
-                                                value="#{annonceController.current.toilet}"
+                                                value="#{annonceController.editAnnonce.toilet}"
                                                 title="#{bundle.CreateAnnonceTitle_toilet}"
                                                 class="form-control"
                                                 type="number"
@@ -266,11 +287,9 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">                                        
-                                    <p:commandButton type="submit" action="#{annonceController.create()}" value="enregistrer" />
+                                    <p:commandButton type="submit" action="#{annonceController.edit()}" value="editer" />
                                 </div>
-                                <div class="form-group col-md-6">                                        
-                                    <p:commandButton type="submit" action="#{annonceController.showSelected()}" value="show" />
-                                </div>
+
                             </div>
                         </h:form>
                     </div>
