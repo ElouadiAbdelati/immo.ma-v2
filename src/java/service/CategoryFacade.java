@@ -36,7 +36,7 @@ public class CategoryFacade extends AbstractFacade<Category> {
                 + " c.NAME as name,"
                 + " COUNT(*) as nomber"
                 + " FROM category c , annonce a "
-                + " WHERE a.CATEGORY_ID =c.ID and a.ACTIVE=1 GROUP BY c.NAME "
+                + " WHERE a.CATEGORY_ID =c.ID and a.ACTIVE=1  and ANNONCESTATUS='APPROVE' GROUP BY c.NAME "
                 );
         
         List<Object[]> res =  query.getResultList();

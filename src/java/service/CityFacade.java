@@ -31,7 +31,7 @@ public class CityFacade extends AbstractFacade<City> {
         Query query = getEntityManager().createNativeQuery("SELECT "
                 + " c.name, COUNT(*) as nomber"
                 + " FROM city c, annonce a,  secteur  s "
-                + " WHERE a.SECTEUR_ID=s.ID and s.CITY_ID=c.id and a.ACTIVE=1"
+                + " WHERE a.SECTEUR_ID=s.ID and s.CITY_ID=c.id and a.ACTIVE=1  and ANNONCESTATUS='APPROVE'"
         );
         List<Object[]> res =  query.getResultList();
 

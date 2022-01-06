@@ -365,16 +365,15 @@ public class AnnonceController implements Serializable {
 
     public List<Annonce> getAnnonces() {
         if (annonces == null) {
-            annonces = getFacade().findAll();
+            annonces = getFacade().finActivedAndApproved();
         }
-        System.out.println("controller.AnnonceController.getAnnonces() " + annonces.size());
 
         return annonces;
     }
 
     public List<Annonce> getAnnoncesLimit() {
         if (annoncesLimit == null) {
-//            annoncesLimit = getFacade().findLastInserted(range);
+          annoncesLimit = getFacade().findLastInserted(range);
         }
         return annoncesLimit;
     }

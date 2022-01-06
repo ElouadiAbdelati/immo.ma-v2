@@ -6,9 +6,9 @@
 package service;
 
 import bean.Annonce;
-//import bean.Annonce_;
 import bean.AnnonceStatus;
 import bean.AnnonceType;
+import bean.Annonce_;
 import bean.Annonceur;
 import bean.Category;
 import bean.City;
@@ -25,6 +25,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.primefaces.json.JSONObject;
 import javax.ejb.EJB;
+import javax.persistence.criteria.ParameterExpression;
 
 /**
  *
@@ -36,6 +37,29 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
     @PersistenceContext(unitName = "immo.maPU")
     private EntityManager em;
 
+    public List<Annonce> finActivedAndApproved() {
+        final String query = "SELECT item FROM Annonce item WHERE item.active=1 and item.annonceStatus='APPROVE' ";
+        System.out.println("query = " + query);
+        return getAllAnnonces(query);
+    }
+
+    private List<Annonce> getAllAnnonces(String query) {
+        List<Annonce> list = getEntityManager().createQuery(query).getResultList();
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return list;
+        }
+    }
+    
+      private List<Annonce> getLimit(int limit ,String query) {
+        List<Annonce> list = getEntityManager().createQuery(query) .setMaxResults(limit).getResultList();
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return list;
+        }
+    }
 
     public List<Annonce> search(City city, AnnonceType annonceType,
             int nbrchambresSearch, int tailleMinimaleSearch, int tailleMaxSearch, int nbrThermesSearch) {
@@ -56,7 +80,7 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
 
         }
         if (!whereAdded) {
-            query += "WHERE active=1 and 1=1 ";
+            query += "WHERE active=1 and ANNONCESTATUS='APPROVE' and 1=1 ";
         }
 
         if (nbrchambresSearch > 0) {
@@ -105,21 +129,21 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
             annonce.setPiscine((Boolean) line[12]);
             annonce.setPrix((BigDecimal) line[13]);
             annonce.setReference((String) line[14]);
-          
+
             annonce.setSurface((Double) line[16]);
             annonce.setTitle((String) line[17]);
             annonce.setToilet((Integer) line[18]);
 
-            AnnonceType annonceType1 =  getEntityManager().find(AnnonceType.class,(Long) line[19]);
+            AnnonceType annonceType1 = getEntityManager().find(AnnonceType.class, (Long) line[19]);
             annonce.setAnnonceType(annonceType1);
 
-            Category category = getEntityManager().find(Category.class,(Long) line[20]);
+            Category category = getEntityManager().find(Category.class, (Long) line[20]);
             annonce.setCategory(category);
 
-            Secteur secteur = getEntityManager().find(Secteur.class,(Long) line[21]);
+            Secteur secteur = getEntityManager().find(Secteur.class, (Long) line[21]);
             annonce.setSecteur(secteur);
 
-            Annonceur annonceur = getEntityManager().find(Annonceur.class,(Long) line[22]);
+            Annonceur annonceur = getEntityManager().find(Annonceur.class, (Long) line[22]);
             annonce.setAnnonceur(annonceur);
 
             list.add(annonce);
@@ -143,14 +167,10 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
         super(Annonce.class);
     }
 
-//       public List<Annonce> findLastInserted(int[] range) {
-//        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-//        cq.select(cq.from(Annonce.class)).orderBy(getEntityManager().getCriteriaBuilder().desc(cq.from(Annonce.class).get(Annonce_.id)))
-//                ;
-//        javax.persistence.Query q = getEntityManager().createQuery(cq);
-//        q.setMaxResults(range[1] - range[0] + 1);
-//        q.setFirstResult(range[0]);
-//        return q.getResultList();
-//    }
-    
+    public List<Annonce> findLastInserted(int[] range) {
+        final String query = "SELECT item FROM Annonce item WHERE item.active=1 and item.annonceStatus='APPROVE' ORDER BY item.id DESC ";
+        System.out.println("query = " + query);
+        return getLimit(3,query);
+    }
+
 }

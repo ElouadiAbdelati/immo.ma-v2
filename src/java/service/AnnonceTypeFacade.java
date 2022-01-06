@@ -30,7 +30,7 @@ public class AnnonceTypeFacade extends AbstractFacade<AnnonceType> {
         Query query = getEntityManager().createNativeQuery("SELECT "
                 + " atype.TYPE, COUNT(*) as nomber"
                 + " FROM annoncetype atype, annonce a "
-                + " WHERE a.ANNONCETYPE_ID=atype.ID and a.ACTIVE=1"
+                + " WHERE a.ANNONCETYPE_ID=atype.ID and a.ACTIVE=1  and ANNONCESTATUS='APPROVE'"
         );
         List<Object[]> res =  query.getResultList();
 
