@@ -6,9 +6,11 @@
 package service;
 
 import bean.Annonceur;
-import javax.ejb.Stateful;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
-@Stateful
+@LocalBean
+@Stateless 
 public class AuthUser {
 
     private Annonceur curUser;

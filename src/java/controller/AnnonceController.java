@@ -3,6 +3,7 @@ package controller;
 import bean.Annonce;
 import bean.AnnonceStatus;
 import bean.AnnonceType;
+import bean.Annonceur;
 import bean.City;
 import bean.helper.AnnonceTypeAnnonce;
 import bean.helper.CategoryAnnonce;
@@ -53,7 +54,11 @@ import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
 import java.util.UUID;
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.imageio.ImageIO;
+import javax.naming.InitialContext;
+import service.AnnonceurFacade;
 import service.AuthUser;
 
 @Named("annonceController")
@@ -93,21 +98,24 @@ public class AnnonceController implements Serializable {
     private AnnonceTypeFacade annonceTypeFacade;
     @EJB
     private CityFacade cityFacade;
-    
-   
-     
+    @EJB
+    private AnnonceurFacade annonceurFacade;
     @EJB
     private AuthUser authUser;
-    
 
     public AuthUser getAuthUser() {
+//        try {
+//            InitialContext ctx = new InitialContext();
+//            authUser = (AuthUser) ctx.lookup("java:comp/env/AuthUser");
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
         return authUser;
     }
 
     public void setAuthUser(AuthUser authUser) {
         this.authUser = authUser;
     }
-
 
     private PaginationHelper pagination;
 
@@ -128,8 +136,7 @@ public class AnnonceController implements Serializable {
         current = new Annonce();
         current.setActive(true);
         current.setStatus(AnnonceStatus.EN_COURS);
-        System.out.println(getAuthUser().getCurUser());
-        current.setAnnonceur(getAuthUser().getCurUser());
+
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
@@ -200,6 +207,9 @@ public class AnnonceController implements Serializable {
     public String create() {
         try {
             current.setAnnonceStatus(current.getStatus().toString());
+            Annonceur annonceur = annonceurFacade.findBylogin(getAuthUser().getCurUser().getEmail());
+             System.out.println("annonceur create " + annonceur.toString());
+            current.setAnnonceur(annonceur);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AnnonceCreated"));
             current = new Annonce();
@@ -533,7 +543,7 @@ public class AnnonceController implements Serializable {
             Image image = ImageIO.read(inputStream);
             BufferedImage bi = this.createResizedCopy(image, 360, 360, true);
             String id = UUID.randomUUID().toString();
-            String url = "D:\\Users\\soulaimane\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
+            String url = "C:\\Users\\ok\\OneDrive\\Documents\\NetBeansProjects\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
             ImageIO.write(bi, fileName.split("\\.")[1], new File(url));
             current.setImagePath("/ressources/img/annonces/annonce" + id + "." + fileName.split("\\.")[1]);
         } catch (IOException ex) {

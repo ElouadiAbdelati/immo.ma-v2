@@ -23,7 +23,7 @@ import service.AuthUser;
 @SessionScoped
 public class AnnonceurController implements Serializable {
 
-    private Annonceur current;
+    private Annonceur current = null;
     private DataModel items = null;
     @EJB
     private service.AnnonceurFacade ejbFacade;
@@ -48,8 +48,8 @@ public class AnnonceurController implements Serializable {
     }
 
     public String signIn() {
-
-        int res = ejbFacade.seConnecter(getSelected().getEmail(), getSelected().getPassword());
+        System.out.println("signIn "+ getCurrent().toString());
+        int res = ejbFacade.seConnecter(getCurrent().getEmail(), getCurrent().getPassword());
         if (res > 0) {
             authUser.signIn(getCurrent());
             return "/index?faces-redirect=true";
@@ -58,7 +58,7 @@ public class AnnonceurController implements Serializable {
         } else if (res == -2) {
             JsfUtil.addErrorMessage("Password Incorrect innexistant");
         }
-        current = null;
+        current = new Annonceur();
         return null;
     }
 
@@ -287,7 +287,9 @@ public class AnnonceurController implements Serializable {
 
     public Annonceur getCurrent() {
         if (current == null) {
-            return new Annonceur();
+            System.out.println(" new Annonceur()");
+            current =new Annonceur();
+            return current;
         }
         return current;
     }
