@@ -50,9 +50,9 @@ public class Consumer {
                             System.out.println(jmsMessage.toString());
                             String body = "";
                             if (jmsMessage.getStatus()) {
-                                body += "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " a été accepté avec succeé. <br/>";
+                                body += "Votre annonce contenant la référence " + jmsMessage.getReferenceAnnonce() + " a été acceptée avec succès. <br/>";
                             } else  {
-                                body = "Votre annonce qui a comme reference " + jmsMessage.getReferenceAnnonce() + " n'a pas été accepté. <br/>";
+                                body = "Votre annonce qui a comme référence " + jmsMessage.getReferenceAnnonce() + " n'a pas été accepter. <br/>";
                                 body += "<br/> Pour plus d'information, vous pouvez nous contacter.";
                             }
                             body += "<br/> Email : <a href='http://localhost:8080/immo.ma-v2/'> immo.ma.suport@gmail.com </a>";

@@ -1,0 +1,120 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <ui:composition template="/template_admin.xhtml">
+        <ui:define name="body">
+            <div style="margin: 0 20px">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <h:form>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="mdi mdi-map-marker-multiple" /></div>
+                                            <h:selectOneListbox
+                                                id="citySearsh"
+                                                size="1"
+                                                value="#{annonceController.citySearch}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItem itemDisabled="true"  itemLabel="N'importe quel emplacement" itemValue=""/>
+                                                <f:selectItems value="#{annonceController.citys}" var="cityItem" 
+                                                               itemLabel="#{cityItem.name}" itemValue="#{cityItem}" />
+                                            </h:selectOneListbox>  
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="mdi mdi-home-modern" /></div>
+                                            <h:selectOneListbox
+                                                id="annonceTypeSearsh"
+                                                size="1"
+                                                value="#{annonceController.categorAdminySearch}"
+                                                class="form-control"
+                                                >
+                                                <f:selectItem itemDisabled="true"  itemLabel="N'importe quel category" itemValue=""/>
+                                                <f:selectItems value="#{annonceController.categoryAnnoncesAdmin}" var="categoryAnnonceSearch" 
+                                                               itemLabel="#{categoryAnnonceSearch.name}" itemValue="#{categoryAnnonceSearch}" />
+                                            </h:selectOneListbox>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="mdi mdi-home-modern" /></div>
+                                            <h:selectOneListbox id="nbrchambresSearch" 
+                                                                class="form-control select2"
+                                                                size="1"
+                                                                value="#{annonceController.typeAnnonceSearch}" 
+                                                                >
+                                                <f:selectItem itemDisabled="true"  itemLabel="Type" itemValue=""/>
+                                                <f:selectItem itemLabel="vente" itemValue="1"/>
+                                                <f:selectItem itemLabel="louer" itemValue="2"/>
+                                            </h:selectOneListbox>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                        <div class="input-group">
+                                            <div class="input-group">
+                                                <h:commandLink  class="btn btn-secondary btn-block no-radius font-weight-bold" value = "CHERCHER" action = "#{annonceController.statisticSearch1()}" >
+                                                    <f:ajax  execute='@form' render='@form'  />  
+                                                    <f:ajax   render="adminDiv"  />  
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                    <div class="col-12">
+
+                        <div class="card">
+                            <h:panelGroup id="adminDiv">
+                                <canvas id="myChart" width="100%"></canvas>
+                                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                                <script>
+                                    console.log("#{annonceController.labs}");
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        // The type of chart we want to create
+                                        type: 'line',
+
+                                        // The data for our dataset
+                                        data: {
+                                            labels: [#{annonceController.labs}],
+                                            datasets: [{
+                                                    label: "Nombre d'annonces inactives ",
+                                                    backgroundColor: 'rgb(255, 99, 132)',
+                                                    borderColor: 'rgb(255, 99, 132)',
+                                                    data: #{annonceController.data}
+                                                }]
+                                        },
+
+                                        // Configuration options go here
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                        ticks: {
+                                                            beginAtZero: true,
+                                                            stepSize: 1
+                                                        }
+                                                    }]
+                                            }
+                                        }
+
+                                    });
+                                </script>
+
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

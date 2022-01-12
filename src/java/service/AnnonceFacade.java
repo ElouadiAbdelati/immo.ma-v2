@@ -13,7 +13,9 @@ import bean.Annonceur;
 import bean.Category;
 import bean.City;
 import bean.Secteur;
+import bean.helper.AnnonceVilleScteurCategoryAndType;
 import bean.helper.CategoryAnnonce;
+import bean.helper.CityAnnonce;
 import com.mchange.v2.c3p0.C3P0Registry;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -51,9 +53,9 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
             return list;
         }
     }
-    
-      private List<Annonce> getLimit(int limit ,String query) {
-        List<Annonce> list = getEntityManager().createQuery(query) .setMaxResults(limit).getResultList();
+
+    private List<Annonce> getLimit(int limit, String query) {
+        List<Annonce> list = getEntityManager().createQuery(query).setMaxResults(limit).getResultList();
         if (list == null || list.isEmpty()) {
             return new ArrayList<>();
         } else {
@@ -170,7 +172,90 @@ public class AnnonceFacade extends AbstractFacade<Annonce> {
     public List<Annonce> findLastInserted(int[] range) {
         final String query = "SELECT item FROM Annonce item WHERE item.active=1 and item.annonceStatus='APPROVE' ORDER BY item.id DESC ";
         System.out.println("query = " + query);
-        return getLimit(3,query);
+        return getLimit(3, query);
     }
 
+    public List<AnnonceVilleScteurCategoryAndType> getAnnonceVilleScteurCategoryAndType(City citySearch, Category categorAdminySearch, int type) {
+        String typeAnnocne = "";
+        if (type == 1) {
+            typeAnnocne = "vente";
+        }
+        if (type == 2) {
+            typeAnnocne = "louer";
+        }
+
+        Query query = getEntityManager().createNativeQuery(
+                "SELECT  c.name as ville, s.LIBELLE as secteur, category.NAME as category, annoncetype.TYPE as type, COUNT(*) as nombre "
+                + "FROM category , annoncetype ,city c, annonce a,  secteur  s WHERE a.SECTEUR_ID=s.ID and s.CITY_ID=c.id "
+                + " and a.ACTIVE=1  and ANNONCESTATUS='APPROVE' and a.CATEGORY_ID = category.ID "
+                + "and a.ANNONCETYPE_ID = annoncetype.ID "
+                + "and c.name  like " + "'%" + citySearch.getName() + "%'"
+                + "and category.name  like" + "'%" + categorAdminySearch.getName() + "%'"
+                + "and annoncetype.type like " + "'%" + typeAnnocne + "%'"
+                + "GROUP BY c.name ,"
+                + " s.LIBELLE ,category.NAME , annoncetype.TYPE;"
+        );
+        List<Object[]> res = query.getResultList();
+
+        List<AnnonceVilleScteurCategoryAndType> list = new ArrayList<>();
+        JSONObject obj = new JSONObject();
+
+        Iterator it = res.iterator();
+        while (it.hasNext()) {
+            Object[] line = (Object[]) it.next();
+            AnnonceVilleScteurCategoryAndType result = new AnnonceVilleScteurCategoryAndType();
+            result.setVille((String) line[0]);
+            result.setSecteur((String) line[1]);
+            result.setCategory((String) line[2]);
+            result.setType((String) line[3]);
+            result.setNombre((Long) line[4]);
+            list.add(result);
+        }
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return list;
+    }
+ 
+     public List<AnnonceVilleScteurCategoryAndType> getAnnonceVilleScteurCategoryAndType1(City citySearch, Category categorAdminySearch, int type) {
+        String typeAnnocne = "";
+        if (type == 1) {
+            typeAnnocne = "vente";
+        }
+        if (type == 2) {
+            typeAnnocne = "louer";
+        }
+
+        Query query = getEntityManager().createNativeQuery(
+                "SELECT  c.name as ville, s.LIBELLE as secteur, category.NAME as category, annoncetype.TYPE as type, COUNT(*) as nombre "
+                + "FROM category , annoncetype ,city c, annonce a,  secteur  s WHERE a.SECTEUR_ID=s.ID and s.CITY_ID=c.id "
+                + " and a.ACTIVE=0  and ANNONCESTATUS='APPROVE' and a.CATEGORY_ID = category.ID "
+                + "and a.ANNONCETYPE_ID = annoncetype.ID "
+                + "and c.name  like " + "'%" + citySearch.getName() + "%'"
+                + "and category.name  like" + "'%" + categorAdminySearch.getName() + "%'"
+                + "and annoncetype.type like " + "'%" + typeAnnocne + "%'"
+                + "GROUP BY c.name ,"
+                + " s.LIBELLE ,category.NAME , annoncetype.TYPE;"
+        );
+        List<Object[]> res = query.getResultList();
+
+        List<AnnonceVilleScteurCategoryAndType> list = new ArrayList<>();
+        JSONObject obj = new JSONObject();
+
+        Iterator it = res.iterator();
+        while (it.hasNext()) {
+            Object[] line = (Object[]) it.next();
+            AnnonceVilleScteurCategoryAndType result = new AnnonceVilleScteurCategoryAndType();
+            result.setVille((String) line[0]);
+            result.setSecteur((String) line[1]);
+            result.setCategory((String) line[2]);
+            result.setType((String) line[3]);
+            result.setNombre((Long) line[4]);
+            list.add(result);
+        }
+        if (list == null || list.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return list;
+    }
 }

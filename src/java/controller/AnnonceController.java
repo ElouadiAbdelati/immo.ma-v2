@@ -4,8 +4,10 @@ import bean.Annonce;
 import bean.AnnonceStatus;
 import bean.AnnonceType;
 import bean.Annonceur;
+import bean.Category;
 import bean.City;
 import bean.helper.AnnonceTypeAnnonce;
+import bean.helper.AnnonceVilleScteurCategoryAndType;
 import bean.helper.CategoryAnnonce;
 import bean.helper.CityAnnonce;
 import com.cloudinary.Cloudinary;
@@ -46,13 +48,39 @@ import service.AnnonceTypeFacade;
 import service.CategoryFacade;
 import service.CityFacade;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 import service.AnnonceurFacade;
 import service.AuthUser;
 
 @Named("annonceController")
 @SessionScoped
 public class AnnonceController implements Serializable {
+
+    public String getLabs() {
+        String res = "";
+        for (int i = 0; i < labs.length - 1; i++) {
+            res += "'" + labs[i] + "', ";
+
+        }
+        if (labs.length != 0) {
+            res += "'" + labs[labs.length - 1] + "'";
+        }
+
+        return res;
+    }
+
+    public String getData() {
+        return Arrays.toString(data);
+    }
 
     private Annonce current;
     private Annonce annonceDetail;
@@ -68,6 +96,7 @@ public class AnnonceController implements Serializable {
 
     private List<Annonce> annonces = null;
     private List<CategoryAnnonce> categoryAnnonces = null;
+    private List<Category> categoryAnnoncesAdmin = null;
     private List<AnnonceTypeAnnonce> annonceTypeAnnonces = null;
     private List<CityAnnonce> cityAnnonces = null;
 
@@ -80,7 +109,14 @@ public class AnnonceController implements Serializable {
     private int tailleMaxSearch;
     private int nbrThermesSearch;
 
+    private Category categorAdminySearch;
+    private int typeAnnonceSearch;
+
+    private CategoryAnnonce categoryAnnonceSearch;
+
     private List<Annonce> userAnnonces = null;
+
+    private List<AnnonceVilleScteurCategoryAndType> annonceVilleScteurCategoryAndTypes = null;
 
     @EJB
     private service.AnnonceFacade ejbFacade;
@@ -479,6 +515,46 @@ public class AnnonceController implements Serializable {
 
     }
 
+    private String[] labs = new String[0];
+    ;
+    private Long[] data = new Long[0];
+
+    public void setLabs(String[] labs) {
+        this.labs = labs;
+    }
+
+    public void setData(Long[] data) {
+        this.data = data;
+    }
+
+    public String statisticSearch() {
+
+        annonceVilleScteurCategoryAndTypes = getFacade().getAnnonceVilleScteurCategoryAndType(citySearch, categorAdminySearch, typeAnnonceSearch);
+
+        this.labs = new String[annonceVilleScteurCategoryAndTypes.size()];
+        this.data = new Long[annonceVilleScteurCategoryAndTypes.size()];
+
+        for (int i = 0; i < annonceVilleScteurCategoryAndTypes.size(); i++) {
+            this.labs[i] = annonceVilleScteurCategoryAndTypes.get(i).getSecteur();
+            this.data[i] = annonceVilleScteurCategoryAndTypes.get(i).getNombre();
+        }
+        return "/admin_statistique?faces-redirect=true";
+    }
+
+    
+    public String statisticSearch1() {
+
+        annonceVilleScteurCategoryAndTypes = getFacade().getAnnonceVilleScteurCategoryAndType1(citySearch, categorAdminySearch, typeAnnonceSearch);
+
+        this.labs = new String[annonceVilleScteurCategoryAndTypes.size()];
+        this.data = new Long[annonceVilleScteurCategoryAndTypes.size()];
+
+        for (int i = 0; i < annonceVilleScteurCategoryAndTypes.size(); i++) {
+            this.labs[i] = annonceVilleScteurCategoryAndTypes.get(i).getSecteur();
+            this.data[i] = annonceVilleScteurCategoryAndTypes.get(i).getNombre();
+        }
+        return "/admin_statistique?faces-redirect=true";
+    }
     public String loadAnnonceDetail() {
         System.out.println("loadAnnonceDetail " + getAnnonceDetail().toString() + annonceDetailId);
         annonceDetail = getFacade()
@@ -564,7 +640,7 @@ public class AnnonceController implements Serializable {
             Image image = ImageIO.read(inputStream);
             BufferedImage bi = this.createResizedCopy(image, 360, 360, true);
             String id = UUID.randomUUID().toString();
-            String url = "C:\\Users\\ok\\OneDrive\\Documents\\NetBeansProjects\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
+            String url = "D:\\Users\\soulaimane\\immo.ma-v2\\web\\ressources\\img\\annonces\\annonce" + id + "." + fileName.split("\\.")[1];
             ImageIO.write(bi, fileName.split("\\.")[1], new File(url));
             current.setImagePath("/ressources/img/annonces/annonce" + id + "." + fileName.split("\\.")[1]);
         } catch (IOException ex) {
@@ -659,4 +735,39 @@ public class AnnonceController implements Serializable {
                         .getEmail());
         return ejbFacade.findAllBy("annonceur.id", annonceur.getId().toString());
     }
+
+    public List<AnnonceVilleScteurCategoryAndType> getAnnonceVilleScteurCategoryAndTypes() {
+        if (annonceVilleScteurCategoryAndTypes == null) {
+        }
+        return annonceVilleScteurCategoryAndTypes;
+    }
+
+    public CategoryAnnonce getCategoryAnnonceSearch() {
+        return categoryAnnonceSearch;
+    }
+
+    public List<Category> getCategoryAnnoncesAdmin() {
+        if (categoryAnnoncesAdmin == null) {
+            categoryAnnoncesAdmin = getCategoryFacade().findAll();
+            return categoryAnnoncesAdmin;
+        }
+        return categoryAnnoncesAdmin;
+    }
+
+    public int getTypeAnnonceSearch() {
+        return typeAnnonceSearch;
+    }
+
+    public void setTypeAnnonceSearch(int typeAnnonceSearch) {
+        this.typeAnnonceSearch = typeAnnonceSearch;
+    }
+
+    public Category getCategorAdminySearch() {
+        return categorAdminySearch;
+    }
+
+    public void setCategorAdminySearch(Category categorAdminySearch) {
+        this.categorAdminySearch = categorAdminySearch;
+    }
+
 }

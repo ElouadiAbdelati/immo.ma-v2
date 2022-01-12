@@ -52,7 +52,7 @@ public class EmailUtils {
                     + "                <p style=\"font-size: 20px; color: #000000; flex-wrap: wrap;\">" + body + "</p>\n"
                     + "            </div>\n"
                     + "            <div style=\"padding: 0 0 3px 0;\">\n"
-                    + "                <p style=\"font-size: 20px; color: #000000; flex-wrap: wrap; font-weight: bold;\">Merci pour votre confience.</p>\n"
+                    + "                <p style=\"font-size: 20px; color: #000000; flex-wrap: wrap; font-weight: bold;\">Merci pour votre confiance.</p>\n"
                     + "            </div>\n"
                     + "        </div>\n"
                     + "    </div>";
